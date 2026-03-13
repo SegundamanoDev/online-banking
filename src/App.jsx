@@ -30,6 +30,7 @@ import Transfer from "./components/Transfer";
 import GlobalMoney from "./components/GlobalMoney";
 import DashboardCards from "./components/DashBoardCards";
 import DashboardInsurance from "./components/DashboardInsurance";
+import ScrollToTop from "./components/ScrollToTop";
 
 // This helper hides the Navbar on dashboard routes
 const NavigationWrapper = () => {
@@ -42,6 +43,7 @@ const NavigationWrapper = () => {
 function App() {
   return (
     <Router>
+      <ScrollToTop />
       <NavigationWrapper />
       <Toaster
         position="top-right"
