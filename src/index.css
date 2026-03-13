@@ -1,0 +1,67 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+@import "tailwindcss";
+
+/* 1. Import the Google Font */
+
+@theme {
+  /* Fonts */
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  /* Core Brand Colors (Keep these constant) */
+  --color-bank-accent: #3b82f6;
+  --color-bank-success: #10b981;
+  --color-bank-danger: #ef4444;
+
+  /* Semantic Colors (These will change below) */
+  --color-app-bg: var(--app-bg);
+  --color-app-card: var(--app-card);
+  --color-app-text: var(--app-text);
+  --color-app-border: var(--app-border);
+}
+
+/* 2. Define Light Mode (Default) */
+:root {
+  --app-bg: #f8fafc; /* Slate 50 */
+  --app-card: #ffffff; /* White */
+  --app-text: #0f172a; /* Slate 900 */
+  --app-border: #e2e8f0; /* Slate 200 */
+}
+
+/* 3. Define Dark Mode */
+/* This works if you add the 'dark' class to <html> or based on system pref */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --app-bg: #020617; /* Slate 950 */
+    --app-card: #1e293b; /* Slate 800 */
+    --app-text: #f1f5f9; /* Slate 100 */
+    --app-border: #334155; /* Slate 700 */
+  }
+}
+
+/* Optional: Support a manual toggle class (.dark) */
+.dark {
+  --app-bg: #020617;
+  --app-card: #1e293b;
+  --app-text: #f1f5f9;
+  --app-border: #334155;
+}
+
+/* Global resets for the Banking UI */
+@layer base {
+  body {
+    @apply bg-app-bg text-app-text transition-colors duration-300 antialiased;
+  }
+}
+@keyframes ticker {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-ticker {
+  /* Adjust the '30s' to make it faster or slower */
+  animation: ticker 30s linear infinite;
+}
