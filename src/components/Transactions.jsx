@@ -16,7 +16,7 @@ import {
 const Transactions = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
-  // Dummy Data
+  // Rebranded Data
   const transactionGroups = [
     {
       date: "Today, 13 March",
@@ -24,7 +24,7 @@ const Transactions = () => {
         {
           id: 1,
           title: "Apple Store",
-          sub: "Electronics",
+          sub: "Tech & Gadgets",
           price: "-£1,299.00",
           icon: <ShoppingBag size={18} />,
           type: "expense",
@@ -32,7 +32,7 @@ const Transactions = () => {
         {
           id: 2,
           title: "Starbucks",
-          sub: "Food & Drink",
+          sub: "Lifestyle",
           price: "-£4.50",
           icon: <Coffee size={18} />,
           type: "expense",
@@ -44,8 +44,8 @@ const Transactions = () => {
       items: [
         {
           id: 3,
-          title: "Salary - HSBC Tech",
-          sub: "Income",
+          title: "Salary - UCB Global",
+          sub: "Professional Income",
           price: "+£4,500.00",
           icon: <ArrowDownLeft size={18} />,
           type: "income",
@@ -66,7 +66,7 @@ const Transactions = () => {
         {
           id: 5,
           title: "PureGym Ltd",
-          sub: "Health",
+          sub: "Wellness",
           price: "-£35.00",
           icon: <Zap size={18} />,
           type: "expense",
@@ -74,7 +74,7 @@ const Transactions = () => {
         {
           id: 6,
           title: "Sky Digital",
-          sub: "Bills",
+          sub: "Home Utilities",
           price: "-£82.00",
           icon: <Home size={18} />,
           type: "expense",
@@ -84,126 +84,126 @@ const Transactions = () => {
   ];
 
   return (
-    <div className="max-w-5xl mx-auto space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-700">
+    <div className="max-w-5xl mx-auto space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
       {/* HEADER SECTION */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 px-2">
         <div>
-          <h2 className="text-3xl font-black tracking-tight text-slate-900">
-            Transactions
+          <h2 className="text-4xl font-black italic tracking-tighter text-slate-900">
+            Ledger
           </h2>
-          <p className="text-sm text-gray-500 mt-1 font-medium">
-            Monitoring your checking account •••• 8842
+          <p className="text-xs text-slate-400 mt-2 font-bold uppercase tracking-widest">
+            Capital Management •••• 8842
           </p>
         </div>
-        <button className="flex items-center gap-2 bg-white border border-gray-200 px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-widest text-slate-600 hover:bg-gray-50 transition-all shadow-sm">
+        <button className="flex items-center gap-2 bg-slate-900 text-white px-6 py-3 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] hover:bg-emerald-600 transition-all shadow-xl shadow-slate-200 active:scale-95">
           <Download size={16} />
-          Export Statement
+          Get Statement
         </button>
       </div>
 
       {/* MINI STATS CARDS */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex items-center gap-4">
-          <div className="w-12 h-12 bg-green-50 text-green-600 rounded-xl flex items-center justify-center">
-            <ArrowDownLeft size={24} />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="bg-white p-7 rounded-[2rem] border border-slate-100 shadow-sm flex items-center gap-5 group hover:border-emerald-100 transition-all">
+          <div className="w-14 h-14 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
+            <ArrowDownLeft size={28} />
           </div>
           <div>
-            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
-              Monthly Income
+            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">
+              Total Inflow
             </p>
-            <p className="text-xl font-black text-slate-900">+£8,250.00</p>
+            <p className="text-2xl font-black text-slate-900">+£8,250.00</p>
           </div>
         </div>
-        <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex items-center gap-4">
-          <div className="w-12 h-12 bg-red-50 text-[#db0011] rounded-xl flex items-center justify-center">
-            <ArrowUpRight size={24} />
+        <div className="bg-white p-7 rounded-[2rem] border border-slate-100 shadow-sm flex items-center gap-5 group hover:border-slate-200 transition-all">
+          <div className="w-14 h-14 bg-slate-50 text-slate-400 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
+            <ArrowUpRight size={28} />
           </div>
           <div>
-            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
-              Monthly Spending
+            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">
+              Total Outflow
             </p>
-            <p className="text-xl font-black text-slate-900">-£3,142.50</p>
+            <p className="text-2xl font-black text-slate-900">-£3,142.50</p>
           </div>
         </div>
       </div>
 
       {/* FILTERS & SEARCH */}
-      <div className="flex flex-col sm:flex-row gap-3">
+      <div className="flex flex-col sm:flex-row gap-4">
         <div className="relative flex-1">
           <Search
-            className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
-            size={18}
+            className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-300"
+            size={20}
           />
           <input
             type="text"
-            placeholder="Search by merchant, category or amount..."
-            className="w-full bg-white border border-gray-200 rounded-xl pl-12 pr-4 py-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-red-500/10 focus:border-[#db0011] transition-all"
+            placeholder="Search transactions..."
+            className="w-full bg-white border-none rounded-2xl pl-14 pr-6 py-4 text-sm font-bold shadow-sm focus:ring-2 focus:ring-emerald-500/20 transition-all outline-none placeholder:text-slate-300"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
         </div>
-        <button className="flex items-center justify-center gap-2 bg-white border border-gray-200 px-6 py-3.5 rounded-xl text-sm font-bold text-slate-700 hover:border-slate-300 transition-all">
+        <button className="flex items-center justify-center gap-2 bg-white border border-slate-100 px-8 py-4 rounded-2xl text-xs font-black uppercase tracking-widest text-slate-600 hover:bg-slate-50 transition-all shadow-sm">
           <Filter size={18} />
-          Filters
+          Refine
         </button>
       </div>
 
       {/* TRANSACTION LIST */}
-      <div className="bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden">
+      <div className="bg-white rounded-[2.5rem] border border-slate-50 shadow-sm overflow-hidden">
         {transactionGroups.map((group, idx) => (
           <div key={idx}>
             {/* DATE HEADER */}
-            <div className="bg-gray-50/50 px-6 py-3 border-b border-gray-100">
-              <span className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em]">
+            <div className="bg-slate-50/50 px-8 py-4 border-b border-slate-50">
+              <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">
                 {group.date}
               </span>
             </div>
 
             {/* GROUP ITEMS */}
-            <div className="divide-y divide-gray-50">
+            <div className="divide-y divide-slate-50">
               {group.items.map((item) => (
                 <div
                   key={item.id}
-                  className="flex items-center justify-between p-6 hover:bg-gray-50/80 transition-all cursor-pointer group"
+                  className="flex items-center justify-between p-7 hover:bg-emerald-50/30 transition-all cursor-pointer group"
                 >
-                  <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-5">
                     <div
-                      className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-transform group-hover:scale-110 duration-300 ${
+                      className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-500 group-hover:rotate-[360deg] ${
                         item.type === "income"
-                          ? "bg-green-50 text-green-600"
-                          : "bg-slate-50 text-slate-600"
+                          ? "bg-emerald-600 text-white"
+                          : "bg-slate-900 text-white"
                       }`}
                     >
                       {item.icon}
                     </div>
                     <div>
-                      <h4 className="font-bold text-slate-900 text-sm">
+                      <h4 className="font-black text-slate-900 text-sm tracking-tight">
                         {item.title}
                       </h4>
-                      <p className="text-xs text-gray-400 font-medium">
+                      <p className="text-[11px] text-slate-400 font-bold uppercase tracking-tighter mt-0.5">
                         {item.sub}
                       </p>
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-6">
+                  <div className="flex items-center gap-8">
                     <div className="text-right">
                       <p
                         className={`text-sm font-black ${
                           item.type === "income"
-                            ? "text-green-600"
+                            ? "text-emerald-600"
                             : "text-slate-900"
                         }`}
                       >
                         {item.price}
                       </p>
-                      <p className="text-[10px] text-gray-400 font-bold uppercase tracking-tighter">
-                        Completed
+                      <p className="text-[9px] text-emerald-500 font-black uppercase tracking-widest mt-1">
+                        Settled
                       </p>
                     </div>
                     <ChevronRight
-                      size={18}
-                      className="text-gray-300 group-hover:text-slate-900 group-hover:translate-x-1 transition-all"
+                      size={20}
+                      className="text-slate-200 group-hover:text-emerald-600 group-hover:translate-x-1 transition-all"
                     />
                   </div>
                 </div>
@@ -214,9 +214,9 @@ const Transactions = () => {
       </div>
 
       {/* PAGINATION / LOAD MORE */}
-      <div className="text-center py-4">
-        <button className="text-xs font-bold text-gray-400 hover:text-[#db0011] tracking-[0.2em] uppercase transition-colors">
-          Load older transactions
+      <div className="text-center py-6">
+        <button className="text-[10px] font-black text-slate-300 hover:text-emerald-600 tracking-[0.3em] uppercase transition-all">
+          Retrieve Older Records
         </button>
       </div>
     </div>

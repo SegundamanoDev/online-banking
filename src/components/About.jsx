@@ -7,107 +7,109 @@ import {
   PieChart,
   ChevronDown,
   ChevronUp,
+  Landmark,
 } from "lucide-react";
 
 const AboutBanner = () => {
   const [isRiskExpanded, setIsRiskExpanded] = useState(false);
   const [isLegalExpanded, setIsLegalExpanded] = useState(false);
+
   const benefits = [
     {
-      icon: <Globe className="text-[#db0011]" size={32} strokeWidth={1.5} />,
-      text: "Access investment opportunities all around the globe.",
-    },
-    {
-      icon: <Calendar className="text-[#db0011]" size={32} strokeWidth={1.5} />,
-      text: "Plan for the future with wealth and succession planning",
+      icon: <Globe className="text-emerald-500" size={32} strokeWidth={1.5} />,
+      text: "Global market access with institutional-grade execution.",
     },
     {
       icon: (
-        <Briefcase className="text-[#db0011]" size={32} strokeWidth={1.5} />
+        <Calendar className="text-emerald-500" size={32} strokeWidth={1.5} />
       ),
-      text: "Manage your portfolio with tailored solutions",
+      text: "Comprehensive estate and multi-generational succession planning.",
     },
     {
-      icon: <Heart className="text-[#db0011]" size={32} strokeWidth={1.5} />,
-      text: "Find the right support for your philanthropic vision.",
+      icon: (
+        <Briefcase className="text-emerald-500" size={32} strokeWidth={1.5} />
+      ),
+      text: "Portfolio management through custom-tailored investment mandates.",
     },
     {
-      icon: <PieChart className="text-[#db0011]" size={32} strokeWidth={1.5} />,
-      text: "Receive bespoke financing for your needs.",
+      icon: <Heart className="text-emerald-500" size={32} strokeWidth={1.5} />,
+      text: "Strategic advisory for your philanthropic and legacy goals.",
+    },
+    {
+      icon: (
+        <PieChart className="text-emerald-500" size={32} strokeWidth={1.5} />
+      ),
+      text: "Bespoke structured financing and liquidity solutions.",
     },
   ];
 
   const advisors = [
     {
-      title: "Investment Counsellors",
+      title: "Portfolio Strategists",
       image:
-        "https://www.privatebanking.hsbc.com/content/dam/privatebanking/gpb/brand-(2019)/uplift-images/images/HSBC%20Global%20Private%20Banking%20-%20Woman%20writing.jpg",
+        "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=800",
       description:
-        "Bring ideas and advice that consider your investment objectives, appetite for risk and projected returns.",
+        "Dedicated experts who align your capital with your long-term risk tolerance and yield objectives.",
     },
     {
-      title: "Credit Advisors",
+      title: "Lending Advisors",
       image:
-        "https://www.privatebanking.hsbc.com/content/dam/privatebanking/gpb/brand-(2019)/uplift-images/images/HSBC%20Global%20Private%20Banking%20-%20Man%20at%20the%20airport.jpg",
+        "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=800",
       description:
-        "Develop strategic financing solutions tailored to your needs.",
+        "Specialized credit professionals providing high-net-worth liquidity and asset-backed financing.",
     },
     {
-      title: "Wealth Planners",
+      title: "Wealth Architects",
       image:
-        "https://www.privatebanking.hsbc.com/content/dam/privatebanking/gpb/brand-(2019)/uplift-images/images/HSBC%20Global%20Private%20Banking%20-%20Woman%20thingking.jpg",
+        "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=800",
       description:
-        "Manage your wealth and develop a bespoke plan, both for now and for generations to come.",
+        "Structuring your legacy today to ensure seamless wealth transfer for the generations of tomorrow.",
     },
   ];
-  const riskItems = [
-    "It is important to note that the capital value of, and income from, any investment may go down as well as up and you may not get back the full amount invested",
-    "The investment is subject to normal market fluctuations and there can be no assurance that an investment will return its value or that appreciation will occur",
-    "Liquidity constraints where subscriptions and redemptions are not available daily, or where lockups apply, mean that investors are subject to market risk during interim pricing periods and may not be able to access funds on short notice",
-    "There is a greater risk associated with emerging markets. Liquidity may be less reliable and price volatility may be higher than that experienced in more developed economies. This may result in the fund suffering sudden and large falls in value",
-    "Funds with a single sector focus will typically be more volatile than funds which invest broadly across markets",
-    "Funds with a single country focus will typically be more volatile than funds which invest broadly across markets and geographies",
-    "Region-specific funds have a limited investment scope and are susceptible to a decline in the region in which they invest. Therefore, these funds may be more risky than those which invest more broadly across markets and geographies",
-    "Countries where political leadership is either unstable or where it exerts a very strong influence on markets and business practices may be subject to greater volatility. Political risk may include potential for currency controls which would disrupt efficient financial markets",
-    "Limited transparency is typically a feature of both hedge funds and funds of funds. Funds of funds rely on underlying managers’ allocations and holdings may be less transparent than in single manager long-only funds. Furthermore, hedge funds in particular may have highly tactical investments along with less frequent and less stringent reporting requirements which does not provide investors with a picture of holdings on any given day",
-    "Currency may have either a direct or indirect effect on individuals’ investments. Where the reference currency is different from the reporting currency, foreign exchange movements will directly impact the value of the holdings. Currency will indirectly impact the value of the underlying investments as foreign exchange movements strongly influence the market economy and the competitiveness of both domestic and international companies. Funds which try to hedge to a reference currency can mitigate the direct impact of currency movements but cannot completely isolate the indirect effects of foreign exchange movements",
-    "Where investment decisions are made by an individual or a very small team, the potential loss of any one individual represents a significant risk to the ongoing viability of the fund",
-    "Passive Index funds are designed to track the reference index before fees and expenses. However, these funds may deviate from the index depending on several factors including: how fully the fund replicates the index, if the makeup of the index changes and if dividends are not fully captured",
-    "Smaller Company Risk – Small companies may be less liquid than larger companies and therefore price movements in securities of smaller companies may be more volatile and involve greater risk",
-  ];
+
   return (
-    <section className="relative w-full overflow-hidden bg-white font-sans">
-      <div className="max-w-[1440px] mx-auto px-6 lg:px-24 relative pt-8 lg:pt-12">
-        {/* --- BANNER SECTION --- */}
-        <div className="relative w-full h-[250px] md:h-[350px] lg:h-[400px] overflow-hidden group">
+    <section className="relative w-full bg-white font-sans overflow-hidden">
+      <div className="max-w-[1440px] mx-auto px-6 lg:px-32 relative pt-12 lg:pt-20">
+        {/* --- HERO BANNER SECTION --- */}
+        <div className="relative w-full h-[400px] lg:h-[500px] overflow-hidden rounded-[2.5rem] shadow-2xl">
           <img
-            src="https://www.privatebanking.hsbc.com/content/dam/privatebanking/gpb/brand-(2019)/uplift-images/banner/HSBC%20Global%20Private%20Banking%20-%20Bridged%20metal%20-%20Banner.jpg"
-            alt="HSBC Global Private Banking"
-            className="w-full h-full object-cover object-center"
+            src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=2000"
+            alt="United Capital Private Wealth"
+            className="w-full h-full object-cover"
           />
-          <div className="hidden lg:block absolute top-10 left-10 z-30">
-            <div className="bg-white p-10 max-w-[480px] shadow-2xl border-l-4 border-[#db0011]">
-              <h1 className="text-[40px] font-light leading-tight text-[#333] mb-6">
-                Make the right connection with HSBC Private Bank
+          <div className="absolute inset-0 bg-slate-900/40"></div>
+
+          <div className="absolute top-1/2 -translate-y-1/2 left-6 lg:left-16 z-30">
+            <div className="bg-white/95 backdrop-blur-md p-8 lg:p-16 max-w-[550px] rounded-[2rem] shadow-2xl">
+              <div className="flex items-center gap-2 mb-6">
+                <Landmark className="text-emerald-600" size={24} />
+                <span className="font-black tracking-tighter text-slate-900 text-sm uppercase">
+                  Private Client
+                </span>
+              </div>
+              <h1 className="text-[36px] lg:text-[48px] font-black leading-[1.1] text-slate-900 mb-6 tracking-tight italic">
+                Preserving Wealth across generations.
               </h1>
-              <p className="text-[18px] text-gray-600">
-                We help you find the right connections to grow, manage and
-                preserve your wealth across geographies for generations to come.
+              <p className="text-[18px] text-slate-600 font-medium">
+                We provide the exclusive connections and sophisticated tools
+                required to manage significant capital in a global economy.
               </p>
             </div>
           </div>
         </div>
 
         {/* --- KEY BENEFITS --- */}
-        <div className="mt-16 lg:mt-24 border-b border-gray-100 pb-12">
-          <h2 className="text-[28px] lg:text-[32px] font-bold text-[#333] mb-6">
-            Key benefits
+        <div className="mt-24 pb-20 border-b border-slate-100">
+          <h2 className="text-[32px] font-black text-slate-900 mb-12 tracking-tight">
+            The Private Client Advantage
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-12 gap-x-8 py-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-16 gap-x-12">
             {benefits.map((b, i) => (
-              <div key={i} className="flex items-start space-x-6">
-                <div className="flex-shrink-0">{b.icon}</div>
-                <p className="text-[16px] lg:text-[17px] text-gray-700">
+              <div key={i} className="flex flex-col space-y-4">
+                <div className="w-16 h-16 bg-emerald-50 rounded-2xl flex items-center justify-center">
+                  {b.icon}
+                </div>
+                <p className="text-[18px] text-slate-800 font-semibold leading-snug">
                   {b.text}
                 </p>
               </div>
@@ -115,149 +117,110 @@ const AboutBanner = () => {
           </div>
         </div>
 
-        {/* --- WHY CONNECTIONS MATTER --- */}
-        <div className="py-16 lg:py-24 border-b border-gray-100">
-          <h2 className="text-[28px] lg:text-[32px] font-bold text-[#333] mb-8">
-            Why the right connection matters?
+        {/* --- ADVISOR SECTION --- */}
+        <div className="py-24">
+          <h2 className="text-[32px] font-black text-slate-900 mb-12 tracking-tight italic">
+            A Global Network of Specialists
           </h2>
-          <div className="space-y-6 text-[16px] lg:text-[18px] text-gray-700 max-w-4xl">
-            <p>
-              We understand that true value lies in finding the right
-              opportunities. With HSBC’s global network, we help find what
-              matters most.
-            </p>
-            <h3 className="text-[22px] lg:text-[26px] font-bold text-[#333] mt-12 mb-6">
-              Accessing a global team of specialists
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
-              {advisors.map((a, i) => (
-                <div key={i} className="bg-white">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+            {advisors.map((a, i) => (
+              <div key={i} className="group">
+                <div className="overflow-hidden rounded-[2rem] mb-6 shadow-lg">
                   <img
                     src={a.image}
                     alt={a.title}
-                    className="w-full aspect-[4/3] object-cover mb-4"
+                    className="w-full aspect-[3/4] object-cover transition-transform duration-700 group-hover:scale-105"
                   />
-                  <h4 className="text-[22px] font-light mb-4">{a.title}</h4>
-                  <p className="text-[14px] text-gray-600">{a.description}</p>
                 </div>
-              ))}
-            </div>
+                <h4 className="text-[24px] font-black text-slate-900 mb-2 italic">
+                  {a.title}
+                </h4>
+                <p className="text-[15px] text-slate-500 font-medium leading-relaxed">
+                  {a.description}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
 
-        {/* --- OPPORTUNITY BAR --- */}
-        <div className="py-20 lg:py-28 flex items-start border-b border-gray-100">
-          <div className="w-[4px] h-[70px] lg:h-[90px] bg-[#db0011] mt-2 mr-8 flex-shrink-0"></div>
-          <h2 className="text-[28px] lg:text-[38px] font-light text-[#333] leading-[1.2] lg:w-[66%]">
-            HSBC Private Bank helps you make the right connections to unlock a
-            new world of opportunities
+        {/* --- QUOTE BAR --- */}
+        <div className="py-24 flex items-center gap-12 border-t border-slate-100">
+          <div className="w-[6px] h-24 bg-emerald-500 rounded-full"></div>
+          <h2 className="text-[28px] lg:text-[42px] font-light text-slate-900 leading-tight max-w-4xl">
+            United Capital{" "}
+            <span className="font-black italic">Private Client</span> provides
+            the architecture to unlock institutional-grade opportunities.
           </h2>
         </div>
 
-        {/* --- RISK WARNING ACCORDION --- */}
-        <div className="mt-12 mb-16 border border-gray-200">
-          <button
-            onClick={() => setIsRiskExpanded(!isRiskExpanded)}
-            className="w-full flex items-center justify-between p-6 bg-gray-50 hover:bg-gray-100 transition-colors duration-200"
-          >
-            <h4 className="text-[18px] lg:text-[20px] font-bold text-[#333]">
-              Risk warning
-            </h4>
-            {isRiskExpanded ? (
-              <ChevronUp size={24} />
-            ) : (
-              <ChevronDown size={24} />
-            )}
-          </button>
-
-          {isRiskExpanded && (
-            <div className="p-8 bg-white border-t border-gray-200">
-              <ul className="list-disc pl-5 space-y-5">
-                {riskItems.map((item, index) => (
-                  <li
-                    key={index}
-                    className="text-[14px] lg:text-[15px] text-gray-600 leading-relaxed pl-2"
-                  >
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-        </div>
-
-        <div className="mt-4 mb-24">
-          <div className="border border-gray-200 rounded-sm">
+        {/* --- ACCORDIONS --- */}
+        <div className="space-y-4 mb-32">
+          {/* Risk Warning */}
+          <div className="border border-slate-200 rounded-[1.5rem] overflow-hidden">
             <button
-              onClick={() => setIsLegalExpanded(!isLegalExpanded)}
-              className="w-full flex items-center justify-between p-6 bg-gray-50 hover:bg-gray-100 transition-colors duration-200 text-left"
+              onClick={() => setIsRiskExpanded(!isRiskExpanded)}
+              className="w-full flex items-center justify-between p-8 bg-slate-50 hover:bg-slate-100 transition-all"
             >
-              <h4 className="text-[18px] lg:text-[20px] font-medium text-[#333]">
-                Legal Information
+              <h4 className="text-[18px] font-black text-slate-900 uppercase tracking-widest italic">
+                Market Risk Disclosure
               </h4>
-              {isLegalExpanded ? (
-                <ChevronUp size={24} className="text-[#db0011]" />
+              {isRiskExpanded ? (
+                <ChevronUp size={20} />
               ) : (
-                <ChevronDown size={24} className="text-[#db0011]" />
+                <ChevronDown size={20} />
               )}
             </button>
+            {isRiskExpanded && (
+              <div className="p-8 bg-white border-t border-slate-200 animate-in fade-in slide-in-from-top-2">
+                <p className="text-[14px] text-slate-500 mb-4 font-bold uppercase tracking-tighter">
+                  Please review carefully:
+                </p>
+                <ul className="grid grid-cols-1 md:grid-cols-2 gap-4 list-none">
+                  <li className="text-[13px] text-slate-600 bg-slate-50 p-4 rounded-xl border border-slate-100">
+                    Capital is at risk. Values can fluctuate based on market
+                    conditions.
+                  </li>
+                  <li className="text-[13px] text-slate-600 bg-slate-50 p-4 rounded-xl border border-slate-100">
+                    Liquidity constraints may apply to private equity or
+                    alternative assets.
+                  </li>
+                  <li className="text-[13px] text-slate-600 bg-slate-50 p-4 rounded-xl border border-slate-100">
+                    Foreign exchange movements can significantly impact non-USD
+                    holdings.
+                  </li>
+                </ul>
+              </div>
+            )}
+          </div>
 
+          {/* Legal Info */}
+          <div className="border border-slate-200 rounded-[1.5rem] overflow-hidden">
+            <button
+              onClick={() => setIsLegalExpanded(!isLegalExpanded)}
+              className="w-full flex items-center justify-between p-8 bg-slate-50 hover:bg-slate-100 transition-all"
+            >
+              <h4 className="text-[18px] font-black text-slate-900 uppercase tracking-widest italic">
+                Legal & Jurisdiction
+              </h4>
+              {isLegalExpanded ? (
+                <ChevronUp size={20} />
+              ) : (
+                <ChevronDown size={20} />
+              )}
+            </button>
             {isLegalExpanded && (
-              <div className="p-8 bg-white border-t border-gray-200">
-                <div className="text-[14px] lg:text-[16px] text-gray-600 leading-relaxed space-y-6">
-                  <p>
-                    The information on this site refers to services or products
-                    which are not available in certain locations, or which, in
-                    any relevant location, may have components, methods,
-                    structures and terms different from the ones described, as
-                    well as restrictions on client eligibility. Please contact a
-                    Relationship Manager for details of services and products
-                    that may be available to you.
-                  </p>
-
-                  <p>
-                    The use of the label ‘HSBC Private Banking’, ‘HSBC Private
-                    Bank’, ‘we’, or ‘us’ refers to HSBC’s worldwide private
-                    banking business, and is not indicative of any legal entity
-                    or relationship.
-                  </p>
-
-                  <p>
-                    This information is entirely qualified by reference to the
-                    terms and conditions of the specific service, if any,
-                    provided by the relevant HSBC company.
-                  </p>
-
-                  <p>
-                    Nothing here is to be deemed an offer, solicitation,
-                    endorsement, or recommendation to buy or sell any general or
-                    specific product, service or security and should not be
-                    considered to constitute investment advice.
-                  </p>
-
-                  <p className="font-medium text-black">
-                    Please note that HSBC Private Banking does not provide Legal
-                    and Tax Advice.
-                  </p>
-
-                  <p className="pt-4 border-t border-gray-100 text-[13px]">
-                    Before proceeding, please refer to the full{" "}
-                    <a
-                      href="/disclaimer.html"
-                      className="text-[#db0011] underline hover:text-black transition-colors"
-                    >
-                      Disclaimer
-                    </a>{" "}
-                    and the{" "}
-                    <a
-                      href="/terms-and-conditions.html"
-                      className="text-[#db0011] underline hover:text-black transition-colors"
-                    >
-                      Terms and Conditions
-                    </a>
-                    .
-                  </p>
-                </div>
+              <div className="p-8 bg-white border-t border-slate-200 text-slate-500 text-[14px] leading-relaxed space-y-4">
+                <p>
+                  Investment products are provided by{" "}
+                  <strong>United Capital Wealth Management, N.A.</strong>, a
+                  subsidiary of United Capital Bank. These products are{" "}
+                  <strong>Not FDIC Insured</strong> and carry no bank guarantee.
+                </p>
+                <p>
+                  United Capital Bank does not provide legal or tax advice.
+                  Clients should consult with their personal tax advisors
+                  regarding the implications of any investment strategy.
+                </p>
               </div>
             )}
           </div>

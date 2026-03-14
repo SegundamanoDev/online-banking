@@ -1,120 +1,122 @@
 import React from "react";
+import { ChevronRight, ArrowRight, ArrowLeft, FileText } from "lucide-react";
 
 const Business = () => {
   const quickLinks = [
     {
-      title: "Products and Solutions",
+      title: "Solutions",
       links: [
-        { label: "Compare our business accounts", href: "#" },
-        { label: "Startups and small businesses", href: "#" },
-        { label: "Established businesses", href: "#" },
-        { label: "View all", href: "#" },
+        { label: "Business Checking", href: "#" },
+        { label: "Startups & Emerging Tech", href: "#" },
+        { label: "Commercial Banking", href: "#" },
+        { label: "Treasury Management", href: "#" },
       ],
     },
     {
-      title: "Finance and Borrowing",
+      title: "Capital & Credit",
       links: [
-        { label: "Small Business Loan", href: "#" },
-        { label: "Flexible Business Loan", href: "#" },
-        { label: "Commercial Mortgage", href: "#" },
-        { label: "View All", href: "#" },
+        { label: "SBA Loans", href: "#" },
+        { label: "Line of Credit", href: "#" },
+        { label: "Equipment Financing", href: "#" },
+        { label: "Commercial Real Estate", href: "#" },
       ],
     },
     {
-      title: "Help and Support",
+      title: "Resources",
       links: [
-        { label: "Help centre", href: "#" },
-        { label: "Online Banking", href: "#" },
-        { label: "Fraud Centre", href: "#" },
-        { label: "Contact Us", href: "#" },
+        { label: "Knowledge Center", href: "#" },
+        { label: "Security & Fraud", href: "#" },
+        { label: "Merchant Services", href: "#" },
+        { label: "Contact Advisor", href: "#" },
       ],
     },
   ];
 
   const articles = [
     {
-      category: "Growing my Business",
-      date: "17 November 2025",
-      title:
-        "Unlocking the Power of Generative AI: A Practical Guide for Small...",
+      category: "Innovation",
+      date: "Nov 17, 2025",
+      title: "Generative AI for SMBs: Scaling Operations without Scaling Costs",
       image:
         "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=800",
     },
     {
-      category: "Support",
-      date: "17 November 2025",
-      title: "Let's talk about debt, government debt",
+      category: "Strategy",
+      date: "Oct 12, 2025",
+      title: "Navigating Interest Rate Cycles: A Guide for CFOs",
       image:
         "https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?auto=format&fit=crop&q=80&w=800",
     },
     {
-      category: "Growing a business",
-      date: "7 September 2025",
-      title: "Cefar: Building More Than Websites",
+      category: "Case Study",
+      date: "Sep 07, 2025",
+      title: "Scale Story: How Cefar Tech reached Series B with United Capital",
       image:
         "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=800",
     },
   ];
 
   return (
-    <section className="relative w-full overflow-hidden bg-white font-sans text-[#333]">
+    <section className="relative w-full overflow-hidden bg-white font-sans text-slate-900">
       {/* --- 1. HERO BANNER --- */}
-      <div className="relative w-full h-[500px]">
+      {/* --- 1. HERO BANNER --- */}
+      <div className="relative w-full h-[600px] flex items-end">
+        {" "}
+        {/* Changed items-center to items-end */}
         <img
-          src="/small-business-bank-account-banner-home-banner-2.jpg"
+          src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=2000"
           alt="Grow your business"
-          className="w-full h-full object-cover object-center"
+          className="absolute inset-0 w-full h-full object-cover"
         />
-        <div className="absolute bottom-0 left-0 z-10">
-          <div
-            className="bg-white pt-8 pb-10 px-10 md:px-14 shadow-2xl"
-            style={{
-              clipPath: "polygon(0 0, 85% 0, 100% 100%, 0% 100%)",
-              width: "auto",
-              maxWidth: "520px",
-            }}
-          >
-            <div className="mb-6 max-w-[400px]">
-              <h1 className="text-[28px] md:text-[38px] font-light leading-tight mb-3">
-                Grow your business with HSBC UK
-              </h1>
-              <p className="text-[15px] md:text-[16px] text-gray-700 leading-snug">
-                Starting a business or looking to switch? We have a range of
-                award-winning Business Banking Accounts for you to choose from.
-              </p>
-            </div>
-            <a
-              href="#"
-              className="inline-block bg-[#db0011] hover:bg-black text-white px-8 py-3 font-bold text-[15px] transition-colors"
-            >
-              Find out more
-            </a>
+        <div className="absolute inset-0 bg-slate-900/30"></div>
+        <div className="relative max-w-[1440px] mx-auto w-full px-6 lg:px-32 z-10 pb-16">
+          {" "}
+          {/* Added pb-16 to give it a margin from the bottom */}
+          <div className="bg-white/95 backdrop-blur-sm p-10 md:p-14 shadow-2xl rounded-[2rem] max-w-[600px]">
+            <span className="text-emerald-600 font-black uppercase tracking-widest text-sm mb-4 block">
+              Commercial Banking
+            </span>
+            <h1 className="text-[32px] md:text-[44px] font-black leading-[1.1] mb-6 tracking-tight italic">
+              Empowering the next generation of American enterprise.
+            </h1>
+            <p className="text-[17px] text-slate-600 leading-relaxed mb-8 font-medium">
+              From seed-stage startups to established corporations, we provide
+              the capital and expertise to help your business lead the market.
+            </p>
+            <button className="bg-slate-900 hover:bg-emerald-600 text-white px-10 py-4 font-bold text-[16px] rounded-full transition-all flex items-center group">
+              Open a Business Account
+              <ChevronRight
+                className="ml-2 group-hover:translate-x-1 transition-transform"
+                size={20}
+              />
+            </button>
           </div>
         </div>
       </div>
 
       {/* --- 2. QUICK LINKS GRID --- */}
-      <div className="max-w-[1440px] mx-auto px-6 lg:px-24 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+      <div className="max-w-[1440px] mx-auto px-6 lg:px-32 py-24">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-16">
           {quickLinks.map((section, idx) => (
-            <div key={idx} className="space-y-6">
+            <div key={idx} className="space-y-8">
               <div className="flex items-center space-x-4">
-                <div className="w-[3px] h-[35px] bg-[#db0011]"></div>
-                <h2 className="text-[24px] md:text-[32px] font-light">
+                <div className="w-1.5 h-10 bg-emerald-500 rounded-full"></div>
+                <h2 className="text-[28px] font-black italic tracking-tight">
                   {section.title}
                 </h2>
               </div>
-              <ul className="space-y-4">
+              <ul className="space-y-5">
                 {section.links.map((link, lIdx) => (
                   <li key={lIdx} className="group">
                     <a
-                      href="#"
-                      className="text-[16px] text-gray-700 hover:text-[#db0011] flex items-center"
+                      href={link.href}
+                      className="text-[17px] font-bold text-slate-500 hover:text-emerald-600 flex items-center transition-colors"
                     >
-                      {link.label}{" "}
-                      <span className="ml-2 text-[#db0011] group-hover:translate-x-1 transition-transform">
-                        ›
-                      </span>
+                      {link.label}
+                      <ChevronRight
+                        size={18}
+                        className="ml-1 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all text-emerald-500"
+                      />
                     </a>
                   </li>
                 ))}
@@ -124,100 +126,61 @@ const Business = () => {
         </div>
       </div>
 
-      {/* --- 3. BUSINESS INSIGHTS & CASE STUDIES (NEW SECTION) --- */}
-      <div className="bg-white py-16 lg:py-24 border-t border-gray-100">
-        <div className="max-w-[1440px] mx-auto px-6 lg:px-24">
-          {/* Section Header */}
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12">
+      {/* --- 3. BUSINESS INSIGHTS --- */}
+      <div className="bg-slate-50 py-24 border-y border-slate-100">
+        <div className="max-w-[1440px] mx-auto px-6 lg:px-32">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16">
             <div className="space-y-4">
               <div className="flex items-center space-x-4">
-                <div className="w-[3px] h-[35px] bg-[#db0011]"></div>
-                <h2 className="text-[28px] md:text-[36px] font-light">
-                  Business Insights and Case Studies
+                <div className="w-1.5 h-10 bg-emerald-500 rounded-full"></div>
+                <h2 className="text-[32px] md:text-[40px] font-black italic tracking-tight">
+                  Business Insights
                 </h2>
               </div>
-              <p className="text-gray-600 max-w-2xl">
-                Here's where you'll find our latest articles with a range of
-                hints, tips and insights to inspire, inform and guide you.
+              <p className="text-slate-500 text-lg max-w-2xl font-medium">
+                Expert analysis and founder stories to help you navigate the
+                complexities of modern commerce.
               </p>
-              <div className="pt-2">
-                <button className="border border-gray-400 px-6 py-1.5 text-sm font-medium hover:bg-gray-50 transition-colors">
-                  View all
-                </button>
-              </div>
             </div>
 
-            {/* Navigation Arrows */}
-            <div className="flex space-x-2 mt-6 md:mt-0">
-              <button className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center hover:bg-gray-300 transition-colors">
-                <span className="sr-only">Previous</span>
-                <svg
-                  className="w-5 h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M15 19l-7-7 7-7"
-                  />
-                </svg>
+            <div className="flex space-x-3 mt-8 md:mt-0">
+              <button className="w-12 h-12 rounded-full border-2 border-slate-200 flex items-center justify-center hover:bg-white transition-all text-slate-400 hover:text-slate-900">
+                <ArrowLeft size={20} />
               </button>
-              <button className="w-10 h-10 rounded-full bg-black text-white flex items-center justify-center hover:bg-gray-800 transition-colors">
-                <span className="sr-only">Next</span>
-                <svg
-                  className="w-5 h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M9 5l7 7-7 7"
-                  />
-                </svg>
+              <button className="w-12 h-12 rounded-full bg-slate-900 text-white flex items-center justify-center hover:bg-emerald-600 transition-all">
+                <ArrowRight size={20} />
               </button>
             </div>
           </div>
 
-          {/* Article Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
             {articles.map((article, index) => (
-              <div key={index} className="group cursor-pointer">
-                <div className="aspect-[16/10] overflow-hidden mb-6">
+              <div
+                key={index}
+                className="group cursor-pointer flex flex-col h-full bg-white rounded-[2rem] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500"
+              >
+                <div className="aspect-[16/10] overflow-hidden">
                   <img
                     src={article.image}
                     alt={article.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                   />
                 </div>
-                <div className="space-y-3">
-                  <p className="text-[13px] font-bold text-gray-500 uppercase tracking-wider">
-                    {article.category}
-                  </p>
-                  <p className="text-[13px] text-gray-400">{article.date}</p>
-                  <h3 className="text-[18px] md:text-[20px] font-light leading-snug group-hover:text-[#db0011] transition-colors">
+                <div className="p-8 flex flex-col flex-grow">
+                  <div className="flex justify-between items-center mb-4">
+                    <span className="text-[12px] font-black text-emerald-600 uppercase tracking-widest">
+                      {article.category}
+                    </span>
+                    <span className="text-[13px] text-slate-400 font-medium">
+                      {article.date}
+                    </span>
+                  </div>
+                  <h3 className="text-[20px] font-black leading-tight group-hover:text-emerald-600 transition-colors mb-6">
                     {article.title}
                   </h3>
-                  <div className="pt-4 flex items-center text-gray-500 text-xs">
-                    <svg
-                      className="w-4 h-4 mr-2"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="1.5"
-                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                      />
-                    </svg>
-                    Article
+                  <div className="mt-auto pt-6 border-t border-slate-50 flex items-center text-slate-400 text-xs font-bold uppercase tracking-tighter">
+                    <FileText size={16} className="mr-2 text-emerald-500" />
+                    Read Full Article
                   </div>
                 </div>
               </div>
@@ -226,8 +189,8 @@ const Business = () => {
         </div>
       </div>
 
-      {/* Signature Red Bottom Accent */}
-      <div className="w-full h-[4px] bg-[#db0011]"></div>
+      {/* Signature Emerald Accent */}
+      <div className="w-full h-2 bg-emerald-500"></div>
     </section>
   );
 };

@@ -1072,30 +1072,29 @@
 // export default Navbar;
 import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
+import { Globe } from "lucide-react"; // Make sure lucide-react is installed
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  // Helper for active styling on the top utility bar
+  // Helper for active styling on the top utility bar (Now Emerald)
   const topLinkStyle = ({ isActive }) =>
     `h-10 flex items-center px-1 border-b-2 transition-colors ${
       isActive
-        ? "border-red-600 text-gray-900"
-        : "border-transparent text-gray-600 hover:text-red-600"
+        ? "border-emerald-600 text-gray-900"
+        : "border-transparent text-gray-600 hover:text-emerald-600"
     }`;
 
   return (
     <>
-      {/* SPACER: This pushes the rest of your page content down.
-        Without this, your "Register" header will be hidden under the fixed nav.
-      */}
+      {/* SPACER */}
       <div className="h-[104px] md:h-[120px]" aria-hidden="true" />
 
       <header className="fixed top-0 left-0 w-full z-[100] bg-white shadow-sm">
         {/* 1. Top Utility Bar (Personal, Business, etc.) */}
-        <div className="bg-[#f4f4f4] border-b border-gray-200 hidden md:block">
+        <div className="bg-[#f8fafc] border-b border-gray-100 hidden md:block">
           <div className="max-w-6xl mx-auto px-4 flex justify-between items-center h-10">
-            <nav className="flex space-x-6 text-sm font-medium">
+            <nav className="flex space-x-6 text-[11px] font-bold uppercase tracking-widest">
               <NavLink to="/" className={topLinkStyle}>
                 Personal
               </NavLink>
@@ -1109,6 +1108,9 @@ const Navbar = () => {
                 Corporate
               </NavLink>
             </nav>
+            <div className="text-[10px] text-gray-400 font-medium">
+              Secure Banking for a Modern World
+            </div>
           </div>
         </div>
 
@@ -1116,12 +1118,19 @@ const Navbar = () => {
         <nav className="w-full bg-white border-b border-gray-200">
           <div className="max-w-6xl mx-auto px-4">
             <div className="flex justify-between items-center h-16 md:h-20">
-              {/* Logo / Home Link */}
+              {/* BRAND LOGO: UNITED CAPITAL */}
               <Link to="/" className="flex items-center group">
-                <div className="h-8 w-8 bg-red-600 transform rotate-45 mr-3 hidden sm:block group-hover:bg-black transition-colors"></div>
-                <span className="text-2xl font-bold tracking-tighter text-gray-900">
-                  HSBC <span className="font-light">UK</span>
-                </span>
+                <div className="h-10 w-10 bg-emerald-600 rounded-xl flex items-center justify-center mr-3 group-hover:bg-slate-900 transition-all duration-300 shadow-lg shadow-emerald-100 group-hover:shadow-none">
+                  <Globe className="text-white" size={20} />
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-xl font-black tracking-tighter text-gray-900 leading-none">
+                    UNITED<span className="text-emerald-600">CAPITAL</span>
+                  </span>
+                  <span className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.3em] mt-0.5">
+                    BANK
+                  </span>
+                </div>
               </Link>
 
               {/* Desktop NavLinks */}
@@ -1129,10 +1138,10 @@ const Navbar = () => {
                 <NavLink
                   to="/register"
                   className={({ isActive }) =>
-                    `font-bold transition-all border-b-2 py-1 ${
+                    `font-bold text-sm uppercase tracking-widest transition-all border-b-2 py-1 ${
                       isActive
-                        ? "text-red-600 border-red-600"
-                        : "text-gray-800 border-transparent hover:text-red-600 hover:border-red-600"
+                        ? "text-emerald-600 border-emerald-600"
+                        : "text-gray-800 border-transparent hover:text-emerald-600 hover:border-emerald-600"
                     }`
                   }
                 >
@@ -1141,7 +1150,7 @@ const Navbar = () => {
 
                 <Link
                   to="/logon"
-                  className="bg-[#db0011] text-white px-8 py-2.5 font-bold hover:bg-black transition-all active:scale-95 shadow-sm"
+                  className="bg-emerald-600 text-white px-8 py-3 font-bold text-sm uppercase tracking-widest hover:bg-slate-900 transition-all active:scale-95 shadow-lg shadow-emerald-100"
                 >
                   Log on
                 </Link>
@@ -1153,7 +1162,7 @@ const Navbar = () => {
                   onClick={() => setIsOpen(!isOpen)}
                   className="flex items-center text-gray-800 p-2 focus:outline-none"
                 >
-                  <span className="text-xs font-bold mr-2 uppercase tracking-widest">
+                  <span className="text-[10px] font-black mr-2 uppercase tracking-widest">
                     {isOpen ? "Close" : "Menu"}
                   </span>
                   <div className="space-y-1">
@@ -1174,26 +1183,32 @@ const Navbar = () => {
 
           {/* Mobile Dropdown Menu */}
           <div
-            className={`md:hidden bg-white border-t transition-all duration-300 overflow-hidden ${isOpen ? "max-h-screen" : "max-h-0"}`}
+            className={`md:hidden bg-white border-t transition-all duration-500 ease-in-out overflow-hidden ${isOpen ? "max-h-screen" : "max-h-0"}`}
           >
-            <div className="px-4 py-6 space-y-6">
+            <div className="px-6 py-8 space-y-8">
               <div className="grid grid-cols-2 gap-4">
-                <Link to="/personal" className="text-gray-600 font-medium">
+                <Link
+                  to="/personal"
+                  className="text-xs font-black uppercase tracking-widest text-emerald-600"
+                >
                   Personal
                 </Link>
-                <Link to="/business" className="text-gray-600 font-medium">
+                <Link
+                  to="/business"
+                  className="text-xs font-black uppercase tracking-widest text-gray-400"
+                >
                   Business
                 </Link>
               </div>
               <NavLink
                 to="/register"
-                className="block text-xl font-bold text-gray-900"
+                className="block text-2xl font-black text-gray-900 italic tracking-tighter"
               >
                 Register
               </NavLink>
               <Link
                 to="/logon"
-                className="block w-full bg-[#db0011] text-white py-4 text-center font-bold text-lg"
+                className="block w-full bg-emerald-600 text-white py-4 text-center font-bold text-sm uppercase tracking-[0.2em] shadow-xl shadow-emerald-100"
               >
                 Log on
               </Link>
