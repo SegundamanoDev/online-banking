@@ -1,14 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { bankApi } from "../services/api";
-import authReducer from "./slices/authSlice";
-import twoFactorReducer from "./slices/twoFactorSlice";
+import { apiSlice } from "../../src/services/api";
+import authReducer from "../../src/services/authSlice";
 
 export const store = configureStore({
   reducer: {
-    [bankApi.reducerPath]: bankApi.reducer,
-    auth: authReducer,
-    twoFactor: twoFactorReducer,
+    [apiSlice.reducerPath]: apiSlice.reducer,
+    auth: authReducer, // Add auth here
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(bankApi.middleware),
+    getDefaultMiddleware().concat(apiSlice.middleware),
+  devTools: true,
 });

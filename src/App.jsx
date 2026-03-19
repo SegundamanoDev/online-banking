@@ -31,6 +31,9 @@ import GlobalMoney from "./components/GlobalMoney";
 import DashboardCards from "./components/DashBoardCards";
 import DashboardInsurance from "./components/DashboardInsurance";
 import ScrollToTop from "./components/ScrollToTop";
+import Login from "./components/SignIn";
+import SignUp from "./components/SignUp";
+import AdminDashboard from "./components/AdminDashboard";
 
 // This helper hides the Navbar on dashboard routes
 const NavigationWrapper = () => {
@@ -61,6 +64,8 @@ function App() {
         {/* --- PUBLIC ROUTES --- */}
         <Route path="/" element={<Home />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/zondo/signup" element={<SignUp />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/private" element={<AboutBanner />} />
         <Route path="/business" element={<Business />} />
         <Route path="/corporate" element={<Corporate />} />
@@ -71,6 +76,7 @@ function App() {
         <Route path="/credit-cards" element={<Cards />} />
         <Route path="/loans" element={<LoansPage />} />
         <Route path="/insurance" element={<InsurancePage />} />
+        <Route path="/admin/dashboard" element={<AdminDashboard />} />
 
         {/* --- DASHBOARD NESTED ROUTES --- */}
         {/* We use one parent Route for /dashboard */}

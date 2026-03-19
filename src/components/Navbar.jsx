@@ -1071,13 +1071,43 @@
 
 // export default Navbar;
 import React, { useState } from "react";
-import { Link, NavLink } from "react-router-dom";
-import { Globe } from "lucide-react"; // Make sure lucide-react is installed
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import {
+  Globe,
+  Menu,
+  X,
+  ChevronRight,
+  User,
+  LogOut,
+  LayoutDashboard,
+  ShieldCheck,
+} from "lucide-react";
+// Assuming you use Redux for auth state. Adjust imports to your actual auth logic.
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../services/authSlice";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  // Helper for active styling on the top utility bar (Now Emerald)
+  // --- AUTH STATE ---
+  // Replace this with your actual selector/context
+  const { user, isAuthenticated } = useSelector((state) => state.auth);
+
+  const handleLogout = () => {
+    dispatch(logout());
+    setIsOpen(false);
+    navigate("/");
+  };
+
+  const segments = [
+    { name: "Personal", path: "/" },
+    { name: "Private", path: "/private" },
+    { name: "Business", path: "/business" },
+    { name: "Corporate", path: "/corporate" },
+  ];
+
   const topLinkStyle = ({ isActive }) =>
     `h-10 flex items-center px-1 border-b-2 transition-colors ${
       isActive
@@ -1087,29 +1117,22 @@ const Navbar = () => {
 
   return (
     <>
-      {/* SPACER */}
       <div className="h-[104px] md:h-[120px]" aria-hidden="true" />
 
       <header className="fixed top-0 left-0 w-full z-[100] bg-white shadow-sm">
-        {/* 1. Top Utility Bar (Personal, Business, etc.) */}
+        {/* 1. Desktop Utility Bar */}
         <div className="bg-[#f8fafc] border-b border-gray-100 hidden md:block">
           <div className="max-w-6xl mx-auto px-4 flex justify-between items-center h-10">
             <nav className="flex space-x-6 text-[11px] font-bold uppercase tracking-widest">
-              <NavLink to="/" className={topLinkStyle}>
-                Personal
-              </NavLink>
-              <NavLink to="/private" className={topLinkStyle}>
-                Private
-              </NavLink>
-              <NavLink to="/business" className={topLinkStyle}>
-                Business
-              </NavLink>
-              <NavLink to="/corporate" className={topLinkStyle}>
-                Corporate
-              </NavLink>
+              {segments.map((s) => (
+                <NavLink key={s.name} to={s.path} className={topLinkStyle}>
+                  {s.name}
+                </NavLink>
+              ))}
             </nav>
-            <div className="text-[10px] text-gray-400 font-medium">
-              Secure Banking for a Modern World
+            <div className="text-[10px] text-gray-400 font-medium tracking-wider flex items-center gap-2">
+              <ShieldCheck size={12} className="text-emerald-600" />
+              SECURE BANKING ENCRYPTED
             </div>
           </div>
         </div>
@@ -1118,9 +1141,9 @@ const Navbar = () => {
         <nav className="w-full bg-white border-b border-gray-200">
           <div className="max-w-6xl mx-auto px-4">
             <div className="flex justify-between items-center h-16 md:h-20">
-              {/* BRAND LOGO: UNITED CAPITAL */}
+              {/* BRAND LOGO */}
               <Link to="/" className="flex items-center group">
-                <div className="h-10 w-10 bg-emerald-600 rounded-xl flex items-center justify-center mr-3 group-hover:bg-slate-900 transition-all duration-300 shadow-lg shadow-emerald-100 group-hover:shadow-none">
+                <div className="h-10 w-10 bg-emerald-600 rounded-xl flex items-center justify-center mr-3 group-hover:bg-slate-900 transition-all shadow-lg shadow-emerald-100">
                   <Globe className="text-white" size={20} />
                 </div>
                 <div className="flex flex-col">
@@ -1133,85 +1156,156 @@ const Navbar = () => {
                 </div>
               </Link>
 
-              {/* Desktop NavLinks */}
-              <div className="hidden md:flex items-center space-x-8">
-                <NavLink
-                  to="/register"
-                  className={({ isActive }) =>
-                    `font-bold text-sm uppercase tracking-widest transition-all border-b-2 py-1 ${
-                      isActive
-                        ? "text-emerald-600 border-emerald-600"
-                        : "text-gray-800 border-transparent hover:text-emerald-600 hover:border-emerald-600"
-                    }`
-                  }
-                >
-                  Register
-                </NavLink>
+              {/* Desktop Actions */}
+              <div className="hidden md:flex items-center space-x-6">
+                {!isAuthenticated ? (
+                  <>
+                    <NavLink
+                      to="/register"
+                      className="font-bold text-xs uppercase tracking-widest text-gray-800 hover:text-emerald-600 transition-colors"
+                    >
+                      Register
+                    </NavLink>
+                    <Link
+                      to="/logon"
+                      className="bg-emerald-600 text-white px-8 py-3 font-bold text-xs uppercase tracking-widest hover:bg-slate-900 transition-all shadow-lg shadow-emerald-100"
+                    >
+                      Log on
+                    </Link>
+                  </>
+                ) : (
+                  <div className="flex items-center space-x-6">
+                    {/* Admin Link (Conditional) */}
+                    {user?.role === "admin" && (
+                      <NavLink
+                        to="/admin"
+                        className="flex items-center gap-2 font-bold text-[10px] uppercase tracking-widest text-indigo-600 bg-indigo-50 px-3 py-2 rounded-lg hover:bg-indigo-100 transition-all"
+                      >
+                        <ShieldCheck size={14} /> Admin Command
+                      </NavLink>
+                    )}
 
-                <Link
-                  to="/logon"
-                  className="bg-emerald-600 text-white px-8 py-3 font-bold text-sm uppercase tracking-widest hover:bg-slate-900 transition-all active:scale-95 shadow-lg shadow-emerald-100"
-                >
-                  Log on
-                </Link>
+                    <NavLink
+                      to="/dashboard"
+                      className="flex items-center gap-2 font-bold text-[10px] uppercase tracking-widest text-gray-700 hover:text-emerald-600 transition-colors"
+                    >
+                      <LayoutDashboard size={16} /> Dashboard
+                    </NavLink>
+
+                    <div className="h-8 w-[1px] bg-gray-200" />
+
+                    <div className="flex items-center gap-3 pl-2">
+                      <div className="text-right">
+                        <p className="text-[10px] font-black text-gray-900 uppercase tracking-tighter">
+                          {user?.firstName} {user?.lastName}
+                        </p>
+                        <p className="text-[9px] font-bold text-gray-400 uppercase">
+                          {user?.customerId}
+                        </p>
+                      </div>
+                      <button
+                        onClick={handleLogout}
+                        className="p-2.5 bg-slate-50 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-xl transition-all"
+                        title="Logout"
+                      >
+                        <LogOut size={18} />
+                      </button>
+                    </div>
+                  </div>
+                )}
               </div>
 
-              {/* Mobile Menu Toggle */}
+              {/* Mobile Toggle */}
               <div className="md:hidden">
                 <button
                   onClick={() => setIsOpen(!isOpen)}
-                  className="flex items-center text-gray-800 p-2 focus:outline-none"
+                  className="text-gray-900 p-2 focus:outline-none flex items-center"
                 >
                   <span className="text-[10px] font-black mr-2 uppercase tracking-widest">
                     {isOpen ? "Close" : "Menu"}
                   </span>
-                  <div className="space-y-1">
-                    <span
-                      className={`block w-5 h-0.5 bg-current transition-transform ${isOpen ? "rotate-45 translate-y-1.5" : ""}`}
-                    ></span>
-                    <span
-                      className={`block w-5 h-0.5 bg-current ${isOpen ? "opacity-0" : ""}`}
-                    ></span>
-                    <span
-                      className={`block w-5 h-0.5 bg-current transition-transform ${isOpen ? "-rotate-45 -translate-y-1.5" : ""}`}
-                    ></span>
-                  </div>
+                  {isOpen ? <X size={24} /> : <Menu size={24} />}
                 </button>
               </div>
             </div>
           </div>
 
-          {/* Mobile Dropdown Menu */}
+          {/* 3. Mobile Menu */}
           <div
-            className={`md:hidden bg-white border-t transition-all duration-500 ease-in-out overflow-hidden ${isOpen ? "max-h-screen" : "max-h-0"}`}
+            className={`md:hidden bg-white border-t transition-all duration-300 ease-in-out overflow-hidden ${isOpen ? "max-h-screen opacity-100" : "max-h-0 opacity-0"}`}
           >
-            <div className="px-6 py-8 space-y-8">
-              <div className="grid grid-cols-2 gap-4">
-                <Link
-                  to="/personal"
-                  className="text-xs font-black uppercase tracking-widest text-emerald-600"
-                >
-                  Personal
-                </Link>
-                <Link
-                  to="/business"
-                  className="text-xs font-black uppercase tracking-widest text-gray-400"
-                >
-                  Business
-                </Link>
+            <div className="flex flex-col">
+              {/* Segments (Always Visible) */}
+              <div className="bg-slate-50 border-b border-gray-100">
+                {segments.map((s) => (
+                  <NavLink
+                    key={s.name}
+                    to={s.path}
+                    onClick={() => setIsOpen(false)}
+                    className="flex items-center justify-between px-6 py-4 text-xs font-black uppercase tracking-widest border-l-4 border-transparent text-gray-500"
+                  >
+                    {s.name} <ChevronRight size={14} className="opacity-30" />
+                  </NavLink>
+                ))}
               </div>
-              <NavLink
-                to="/register"
-                className="block text-2xl font-black text-gray-900 italic tracking-tighter"
-              >
-                Register
-              </NavLink>
-              <Link
-                to="/logon"
-                className="block w-full bg-emerald-600 text-white py-4 text-center font-bold text-sm uppercase tracking-[0.2em] shadow-xl shadow-emerald-100"
-              >
-                Log on
-              </Link>
+
+              {/* Contextual Actions */}
+              <div className="px-6 py-8 space-y-4">
+                {!isAuthenticated ? (
+                  <>
+                    <Link
+                      to="/register"
+                      onClick={() => setIsOpen(false)}
+                      className="block text-2xl font-black text-gray-900 italic tracking-tighter"
+                    >
+                      Register
+                    </Link>
+                    <Link
+                      to="/logon"
+                      onClick={() => setIsOpen(false)}
+                      className="block w-full bg-emerald-600 text-white py-5 text-center font-bold text-sm uppercase tracking-[0.2em]"
+                    >
+                      Log on
+                    </Link>
+                  </>
+                ) : (
+                  <div className="space-y-4">
+                    <div className="p-4 bg-slate-50 rounded-2xl mb-6">
+                      <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">
+                        Signed in as
+                      </p>
+                      <p className="font-black text-gray-900">
+                        {user?.firstName} {user?.lastName}
+                      </p>
+                    </div>
+
+                    {user?.role === "admin" && (
+                      <Link
+                        to="/admin"
+                        onClick={() => setIsOpen(false)}
+                        className="flex items-center gap-3 text-lg font-black text-indigo-600"
+                      >
+                        <ShieldCheck /> Admin Command
+                      </Link>
+                    )}
+
+                    <Link
+                      to="/dashboard"
+                      onClick={() => setIsOpen(false)}
+                      className="flex items-center gap-3 text-lg font-black text-gray-900"
+                    >
+                      <LayoutDashboard /> Dashboard
+                    </Link>
+
+                    <button
+                      onClick={handleLogout}
+                      className="flex items-center gap-3 text-lg font-black text-red-600 pt-4 border-t w-full"
+                    >
+                      <LogOut /> Log Out
+                    </button>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </nav>

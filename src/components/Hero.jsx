@@ -76,18 +76,7 @@ const Hero = () => {
                 {currentHero.subDesc}
               </p>
             </div>
-            <div className="mt-10">
-              <a
-                href={currentHero.link}
-                className="inline-flex items-center justify-center gap-2 bg-slate-900 hover:bg-slate-800 text-white px-12 py-5 font-bold transition-all duration-300 rounded-full text-[16px] w-full sm:w-auto group"
-              >
-                {currentHero.btnText}
-                <ArrowRight
-                  size={18}
-                  className="group-hover:translate-x-1 transition-transform"
-                />
-              </a>
-            </div>
+            <div className="mt-10"></div>
           </div>
         </div>
 
@@ -115,15 +104,6 @@ const Hero = () => {
               Experience personalized wealth management, dedicated advisors, and
               exclusive lifestyle rewards designed for your financial journey.
             </p>
-            <a
-              href="/private-client"
-              className="inline-flex items-center text-slate-900 font-bold hover:text-blue-600 group text-[15px]"
-            >
-              <span className="border-b-2 border-slate-900 group-hover:border-blue-600 pb-0.5">
-                Join Private Client
-              </span>
-              <ChevronRight className="ml-1" size={18} />
-            </a>
           </div>
 
           {/* Card 2 */}
@@ -135,15 +115,6 @@ const Hero = () => {
               Track spending, pay bills, and manage your portfolio with the
               United Capital app. Voted #1 for mobile banking experience.
             </p>
-            <a
-              href="/app"
-              className="inline-flex items-center text-white font-bold hover:text-blue-400 group text-[15px]"
-            >
-              <span className="border-b-2 border-white group-hover:border-blue-400 pb-0.5">
-                Download the App
-              </span>
-              <ChevronRight className="ml-1" size={18} />
-            </a>
           </div>
         </div>
       </div>
