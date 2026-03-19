@@ -1,10 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-
+// "http://localhost:5000/api",
 export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
     // Replace with your actual backend URL if different
-    baseUrl: "http://localhost:5000/api",
+    baseUrl: "https://banking-backend-66fx.onrender.com",
     prepareHeaders: (headers) => {
       const token = localStorage.getItem("token");
       if (token) {
