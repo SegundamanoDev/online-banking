@@ -4,7 +4,7 @@ export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
     // Replace with your actual backend URL if different
-    baseUrl: "https://banking-backend-66fx.onrender.com",
+    baseUrl: "https://banking-backend-1-9v3x.onrender.com",
     prepareHeaders: (headers) => {
       const token = localStorage.getItem("token");
       if (token) {
