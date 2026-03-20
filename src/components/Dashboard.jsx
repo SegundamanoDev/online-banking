@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import { useOutletContext, useNavigate } from "react-router-dom";
-// Importing the hooks from your API Slice
-
 import {
   Globe,
   SlidersHorizontal,
@@ -9,9 +7,6 @@ import {
   Plus,
   CreditCard,
   ArrowUpRight,
-  X,
-  CheckCircle2,
-  ChevronRight,
   TrendingUp,
   FileText,
   Loader2,
@@ -23,8 +18,6 @@ const Dashboard = () => {
   const { showBalances } = useOutletContext();
   const navigate = useNavigate();
 
-  // --- RTK QUERY DATA FETCHING ---
-  // These hooks handle loading, error, and data automatically
   const {
     data: profileData,
     isLoading: profileLoading,
@@ -33,11 +26,9 @@ const Dashboard = () => {
 
   const { data: trxData, isLoading: trxLoading } = useGetTransactionsQuery();
 
-  // --- UI STATE ---
   const [isPayeePanelOpen, setPayeePanelOpen] = useState(false);
   const [isSettingsOpen, setSettingsOpen] = useState(false);
 
-  // 1. Handle Loading State
   if (profileLoading || trxLoading) {
     return (
       <div className="h-[60vh] flex flex-col items-center justify-center text-slate-400 gap-4">
@@ -49,7 +40,6 @@ const Dashboard = () => {
     );
   }
 
-  // 2. Handle Error State
   if (profileError) {
     return (
       <div className="h-[60vh] flex flex-col items-center justify-center text-center p-10">
@@ -70,12 +60,10 @@ const Dashboard = () => {
     );
   }
 
-  // Destructure real data from backend
   const { user, account } = profileData;
-  const recentTransactions = trxData?.slice(0, 5) || []; // Get top 5 transactions
+  const recentTransactions = trxData?.slice(0, 5) || [];
 
   const handleExportStatement = () => {
-    // Hits the backend route we created
     window.open(
       `${process.env.REACT_APP_API_URL || ""}/api/transactions/statement`,
       "_blank",
@@ -147,13 +135,11 @@ const Dashboard = () => {
               </h3>
             </div>
 
-            {/* REAL ACCOUNT NUMBER */}
             <p className="text-slate-400 text-xs font-mono tracking-widest uppercase">
               {account.accountNumber}
             </p>
 
             <div className="mt-10">
-              {/* DYNAMIC BALANCE - Using real data and formatting */}
               <h4 className="text-3xl font-black tracking-tight">
                 {showBalances
                   ? `${account.currency === "GBP" ? "£" : "$"}${account.balance.toLocaleString(undefined, { minimumFractionDigits: 2 })}`
@@ -195,19 +181,27 @@ const Dashboard = () => {
 
           <div className="bg-white rounded-[2rem] border border-slate-100 overflow-hidden shadow-sm min-h-[300px]">
             {recentTransactions.length > 0 ? (
-              recentTransactions.map((trx) => (
-                <TransactionRow
-                  key={trx._id}
-                  title={trx.description || "Institutional Transfer"}
-                  sub={trx.type}
-                  date={new Date(trx.createdAt).toLocaleDateString("en-GB", {
-                    day: "numeric",
-                    month: "short",
-                  })}
-                  price={`${trx.sender === user._id ? "-" : "+"}${account.currency === "GBP" ? "£" : "$"}${trx.amount.toLocaleString()}`}
-                  positive={trx.receiver === user._id}
-                />
-              ))
+              recentTransactions.map((trx) => {
+                // Calculation for Plus/Minus and Color
+                const isOutgoing =
+                  trx.sender === user._id || trx.sender?._id === user._id;
+                const prefix = isOutgoing ? "-" : "+";
+                const currencySymbol = account.currency === "GBP" ? "£" : "$";
+
+                return (
+                  <TransactionRow
+                    key={trx._id}
+                    title={trx.description || "Institutional Transfer"}
+                    sub={trx.type}
+                    date={new Date(trx.createdAt).toLocaleDateString("en-GB", {
+                      day: "numeric",
+                      month: "short",
+                    })}
+                    price={`${prefix}${currencySymbol}${trx.amount.toLocaleString()}`}
+                    positive={!isOutgoing}
+                  />
+                );
+              })
             ) : (
               <div className="flex flex-col items-center justify-center h-64 text-slate-300">
                 <p className="text-[10px] font-black uppercase tracking-widest">
@@ -250,7 +244,7 @@ const Dashboard = () => {
   );
 };
 
-// --- SUB-COMPONENTS (Keep inside the same file or export them) ---
+// --- SUB-COMPONENTS ---
 
 const BalanceItem = ({ label, amount, masked, color }) => (
   <div className="group">
@@ -270,7 +264,7 @@ const TransactionRow = ({ title, sub, date, price, positive }) => (
   <div className="flex items-center justify-between p-6 border-b border-slate-50 last:border-0 hover:bg-slate-50/80 transition-all cursor-pointer group">
     <div className="flex items-center gap-5">
       <div
-        className={`w-12 h-12 rounded-2xl flex items-center justify-center font-black text-xs transition-all ${positive ? "bg-emerald-50 text-emerald-600" : "bg-slate-50 text-slate-400"}`}
+        className={`w-12 h-12 rounded-2xl flex items-center justify-center font-black text-xs transition-all ${positive ? "bg-emerald-50 text-emerald-600" : "bg-red-50 text-red-600"}`}
       >
         {title[0]}
       </div>
@@ -284,7 +278,7 @@ const TransactionRow = ({ title, sub, date, price, positive }) => (
       </div>
     </div>
     <p
-      className={`font-black text-sm ${positive ? "text-emerald-600" : "text-slate-900"}`}
+      className={`font-black text-sm ${positive ? "text-emerald-600" : "text-red-600"}`}
     >
       {price}
     </p>

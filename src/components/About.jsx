@@ -16,28 +16,28 @@ const AboutBanner = () => {
 
   const benefits = [
     {
-      icon: <Globe className="text-emerald-500" size={32} strokeWidth={1.5} />,
+      icon: <Globe className="text-emerald-600" size={24} strokeWidth={1.5} />,
       text: "Global market access with institutional-grade execution.",
     },
     {
       icon: (
-        <Calendar className="text-emerald-500" size={32} strokeWidth={1.5} />
+        <Calendar className="text-emerald-600" size={24} strokeWidth={1.5} />
       ),
       text: "Comprehensive estate and multi-generational succession planning.",
     },
     {
       icon: (
-        <Briefcase className="text-emerald-500" size={32} strokeWidth={1.5} />
+        <Briefcase className="text-emerald-600" size={24} strokeWidth={1.5} />
       ),
-      text: "Portfolio management through custom-tailored investment mandates.",
+      text: "Portfolio management through custom investment mandates.",
     },
     {
-      icon: <Heart className="text-emerald-500" size={32} strokeWidth={1.5} />,
-      text: "Strategic advisory for your philanthropic and legacy goals.",
+      icon: <Heart className="text-emerald-600" size={24} strokeWidth={1.5} />,
+      text: "Strategic advisory for philanthropic and legacy goals.",
     },
     {
       icon: (
-        <PieChart className="text-emerald-500" size={32} strokeWidth={1.5} />
+        <PieChart className="text-emerald-600" size={24} strokeWidth={1.5} />
       ),
       text: "Bespoke structured financing and liquidity solutions.",
     },
@@ -49,48 +49,52 @@ const AboutBanner = () => {
       image:
         "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=800",
       description:
-        "Dedicated experts who align your capital with your long-term risk tolerance and yield objectives.",
+        "Dedicated experts aligning capital with your long-term risk tolerance and yield objectives.",
     },
     {
       title: "Lending Advisors",
       image:
         "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=800",
       description:
-        "Specialized credit professionals providing high-net-worth liquidity and asset-backed financing.",
+        "Specialized professionals providing high-net-worth liquidity and asset-backed financing.",
     },
     {
       title: "Wealth Architects",
       image:
         "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=800",
       description:
-        "Structuring your legacy today to ensure seamless wealth transfer for the generations of tomorrow.",
+        "Structuring your legacy today to ensure seamless wealth transfer for future generations.",
     },
   ];
 
   return (
-    <section className="relative w-full bg-white font-sans overflow-hidden">
-      <div className="max-w-[1440px] mx-auto px-6 lg:px-32 relative pt-12 lg:pt-20">
+    <section className="w-full bg-white font-sans overflow-hidden">
+      <div className="max-w-6xl mx-auto px-6 py-12 lg:py-20">
         {/* --- HERO BANNER SECTION --- */}
-        <div className="relative w-full h-[400px] lg:h-[500px] overflow-hidden rounded-[2.5rem] shadow-2xl">
+        <div className="relative w-full min-h-[450px] lg:h-[540px] overflow-hidden rounded-[2rem] shadow-xl">
           <img
-            src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=2000"
+            src="https://i.pinimg.com/1200x/0b/bd/51/0bbd51b0158c6fd07bc44477a7886c53.jpg"
             alt="United Capital Private Wealth"
-            className="w-full h-full object-cover"
+            className="absolute inset-0 w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-slate-900/40"></div>
+          <div className="absolute inset-0 bg-slate-900/30"></div>
 
-          <div className="absolute top-1/2 -translate-y-1/2 left-6 lg:left-16 z-30">
-            <div className="bg-white/95 backdrop-blur-md p-8 lg:p-16 max-w-[550px] rounded-[2rem] shadow-2xl">
-              <div className="flex items-center gap-2 mb-6">
-                <Landmark className="text-emerald-600" size={24} />
-                <span className="font-black tracking-tighter text-slate-900 text-sm uppercase">
-                  Private Client
+          {/* Portable Content Box */}
+          <div className="relative h-full flex items-center p-6 lg:p-12">
+            <div className="bg-white/95 backdrop-blur-sm p-8 lg:p-12 max-w-[480px] rounded-3xl shadow-xl">
+              <div className="flex items-center gap-2 mb-4">
+                <Landmark className="text-emerald-600" size={18} />
+                <span className="font-bold tracking-widest text-slate-500 text-[10px] uppercase">
+                  Private Client Group
                 </span>
               </div>
-              <h1 className="text-[36px] lg:text-[48px] font-black leading-[1.1] text-slate-900 mb-6 tracking-tight italic">
-                Preserving Wealth across generations.
+              <h1 className="text-3xl lg:text-4xl font-extrabold leading-tight text-slate-900 mb-4 tracking-tight">
+                Preserving Wealth <br />
+                <span className="text-emerald-600 italic font-medium">
+                  across generations.
+                </span>
               </h1>
-              <p className="text-[18px] text-slate-600 font-medium">
+              <p className="text-base text-slate-600 leading-relaxed">
                 We provide the exclusive connections and sophisticated tools
                 required to manage significant capital in a global economy.
               </p>
@@ -99,17 +103,17 @@ const AboutBanner = () => {
         </div>
 
         {/* --- KEY BENEFITS --- */}
-        <div className="mt-24 pb-20 border-b border-slate-100">
-          <h2 className="text-[32px] font-black text-slate-900 mb-12 tracking-tight">
+        <div className="mt-20 pb-16 border-b border-slate-100">
+          <h2 className="text-2xl font-bold text-slate-900 mb-10 tracking-tight">
             The Private Client Advantage
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-16 gap-x-12">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
             {benefits.map((b, i) => (
-              <div key={i} className="flex flex-col space-y-4">
-                <div className="w-16 h-16 bg-emerald-50 rounded-2xl flex items-center justify-center">
+              <div key={i} className="flex gap-5 items-start">
+                <div className="shrink-0 w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center">
                   {b.icon}
                 </div>
-                <p className="text-[18px] text-slate-800 font-semibold leading-snug">
+                <p className="text-[15px] text-slate-700 font-medium leading-snug pt-1">
                   {b.text}
                 </p>
               </div>
@@ -118,24 +122,29 @@ const AboutBanner = () => {
         </div>
 
         {/* --- ADVISOR SECTION --- */}
-        <div className="py-24">
-          <h2 className="text-[32px] font-black text-slate-900 mb-12 tracking-tight italic">
-            A Global Network of Specialists
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+        <div className="py-20">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+            <h2 className="text-2xl font-bold text-slate-900 tracking-tight italic">
+              A Global Network of Specialists
+            </h2>
+            <p className="text-slate-400 text-sm font-medium">
+              Expertise across every asset class.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {advisors.map((a, i) => (
               <div key={i} className="group">
-                <div className="overflow-hidden rounded-[2rem] mb-6 shadow-lg">
+                <div className="overflow-hidden rounded-2xl mb-5 shadow-sm border border-slate-100">
                   <img
                     src={a.image}
                     alt={a.title}
-                    className="w-full aspect-[3/4] object-cover transition-transform duration-700 group-hover:scale-105"
+                    className="w-full aspect-[4/3] object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                 </div>
-                <h4 className="text-[24px] font-black text-slate-900 mb-2 italic">
+                <h4 className="text-lg font-bold text-slate-900 mb-2">
                   {a.title}
                 </h4>
-                <p className="text-[15px] text-slate-500 font-medium leading-relaxed">
+                <p className="text-sm text-slate-500 leading-relaxed">
                   {a.description}
                 </p>
               </div>
@@ -144,82 +153,83 @@ const AboutBanner = () => {
         </div>
 
         {/* --- QUOTE BAR --- */}
-        <div className="py-24 flex items-center gap-12 border-t border-slate-100">
-          <div className="w-[6px] h-24 bg-emerald-500 rounded-full"></div>
-          <h2 className="text-[28px] lg:text-[42px] font-light text-slate-900 leading-tight max-w-4xl">
+        <div className="py-16 flex items-center gap-8 border-t border-slate-100">
+          <div className="w-[4px] h-16 bg-emerald-500 rounded-full shrink-0"></div>
+          <h2 className="text-xl lg:text-2xl font-normal text-slate-700 leading-snug max-w-3xl">
             United Capital{" "}
-            <span className="font-black italic">Private Client</span> provides
-            the architecture to unlock institutional-grade opportunities.
+            <span className="font-bold text-slate-900 italic">
+              Private Client
+            </span>{" "}
+            provides the architecture to unlock institutional-grade
+            opportunities.
           </h2>
         </div>
 
         {/* --- ACCORDIONS --- */}
-        <div className="space-y-4 mb-32">
+        <div className="space-y-3 mb-20">
           {/* Risk Warning */}
-          <div className="border border-slate-200 rounded-[1.5rem] overflow-hidden">
+          <div className="border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
             <button
               onClick={() => setIsRiskExpanded(!isRiskExpanded)}
-              className="w-full flex items-center justify-between p-8 bg-slate-50 hover:bg-slate-100 transition-all"
+              className="w-full flex items-center justify-between p-6 bg-slate-50 hover:bg-slate-100 transition-all"
             >
-              <h4 className="text-[18px] font-black text-slate-900 uppercase tracking-widest italic">
+              <h4 className="text-xs font-bold text-slate-700 uppercase tracking-widest italic">
                 Market Risk Disclosure
               </h4>
               {isRiskExpanded ? (
-                <ChevronUp size={20} />
+                <ChevronUp size={16} />
               ) : (
-                <ChevronDown size={20} />
+                <ChevronDown size={16} />
               )}
             </button>
             {isRiskExpanded && (
-              <div className="p-8 bg-white border-t border-slate-200 animate-in fade-in slide-in-from-top-2">
-                <p className="text-[14px] text-slate-500 mb-4 font-bold uppercase tracking-tighter">
-                  Please review carefully:
+              <div className="p-6 bg-white border-t border-slate-100 animate-in fade-in slide-in-from-top-1">
+                <p className="text-[11px] text-slate-400 mb-4 font-bold uppercase tracking-widest">
+                  Assessment Protocols:
                 </p>
-                <ul className="grid grid-cols-1 md:grid-cols-2 gap-4 list-none">
-                  <li className="text-[13px] text-slate-600 bg-slate-50 p-4 rounded-xl border border-slate-100">
-                    Capital is at risk. Values can fluctuate based on market
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="text-xs text-slate-600 bg-slate-50 p-4 rounded-lg border border-slate-100">
+                    Capital is at risk. Values fluctuate based on market
                     conditions.
-                  </li>
-                  <li className="text-[13px] text-slate-600 bg-slate-50 p-4 rounded-xl border border-slate-100">
-                    Liquidity constraints may apply to private equity or
-                    alternative assets.
-                  </li>
-                  <li className="text-[13px] text-slate-600 bg-slate-50 p-4 rounded-xl border border-slate-100">
-                    Foreign exchange movements can significantly impact non-USD
-                    holdings.
-                  </li>
-                </ul>
+                  </div>
+                  <div className="text-xs text-slate-600 bg-slate-50 p-4 rounded-lg border border-slate-100">
+                    Liquidity constraints apply to private or alternative
+                    assets.
+                  </div>
+                  <div className="text-xs text-slate-600 bg-slate-50 p-4 rounded-lg border border-slate-100">
+                    FX movements can impact non-USD holdings significantly.
+                  </div>
+                </div>
               </div>
             )}
           </div>
 
           {/* Legal Info */}
-          <div className="border border-slate-200 rounded-[1.5rem] overflow-hidden">
+          <div className="border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
             <button
               onClick={() => setIsLegalExpanded(!isLegalExpanded)}
-              className="w-full flex items-center justify-between p-8 bg-slate-50 hover:bg-slate-100 transition-all"
+              className="w-full flex items-center justify-between p-6 bg-slate-50 hover:bg-slate-100 transition-all"
             >
-              <h4 className="text-[18px] font-black text-slate-900 uppercase tracking-widest italic">
+              <h4 className="text-xs font-bold text-slate-700 uppercase tracking-widest italic">
                 Legal & Jurisdiction
               </h4>
               {isLegalExpanded ? (
-                <ChevronUp size={20} />
+                <ChevronUp size={16} />
               ) : (
-                <ChevronDown size={20} />
+                <ChevronDown size={16} />
               )}
             </button>
             {isLegalExpanded && (
-              <div className="p-8 bg-white border-t border-slate-200 text-slate-500 text-[14px] leading-relaxed space-y-4">
+              <div className="p-6 bg-white border-t border-slate-100 text-slate-500 text-xs leading-relaxed space-y-3">
                 <p>
-                  Investment products are provided by{" "}
-                  <strong>United Capital Wealth Management, N.A.</strong>, a
-                  subsidiary of United Capital Bank. These products are{" "}
-                  <strong>Not FDIC Insured</strong> and carry no bank guarantee.
+                  Investment products provided by{" "}
+                  <strong>United Capital Wealth Management, N.A.</strong> These
+                  products are <strong>Not FDIC Insured</strong>.
                 </p>
                 <p>
                   United Capital Bank does not provide legal or tax advice.
-                  Clients should consult with their personal tax advisors
-                  regarding the implications of any investment strategy.
+                  Consult with personal advisors regarding investment strategy
+                  implications.
                 </p>
               </div>
             )}

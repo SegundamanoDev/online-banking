@@ -14,14 +14,16 @@ const Mortgage = () => {
       title: "Compare our rates",
       description:
         "Search our mortgage deals to see if any meet your needs. Choose HSBC and you could find a lower interest rate that could make your monthly repayments less.",
-      image: "/mortgage-keys.jpg",
+      image:
+        "https://www.hsbc.co.uk/content/dam/hsbc/en/images/16-9/keyring-small-house.jpg/jcr:content/renditions/cq5dam.web.1280.1280.jpeg",
       hasImage: true,
       bgColor: "bg-[#db0011]",
     },
     {
       title: "Get a decision in principle",
       description: "Find out how to apply and get a decision in principle.",
-      image: "/family-sofa.jpg",
+      image:
+        "https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=1000&auto=format&fit=crop",
       hasImage: true,
       bgColor: "bg-gray-100",
     },
@@ -44,28 +46,28 @@ const Mortgage = () => {
       title: "First-time buyer mortgages",
       description:
         "Find out everything you need on the journey to owning your own home.",
-      icon: "/first-time.jpg",
+      icon: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?q=80&w=600&auto=format&fit=crop",
       link: "/mortgages/first-time-buyers",
     },
     {
       title: "Remortgage to HSBC",
       description:
         "If your mortgage is with another lender, easily move it to HSBC and you could get a better deal.",
-      icon: "/remortgage.jpg",
+      icon: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?q=80&w=600&auto=format&fit=crop",
       link: "/mortgages/move-your-mortgage",
     },
     {
       title: "Mortgages for moving home",
       description:
         "Move home and you could get a better deal with an HSBC mortgage.",
-      icon: "/moving-home.jpg",
+      icon: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=600&auto=format&fit=crop",
       link: "/mortgages/moving-home",
     },
     {
       title: "Buy-to-let mortgages",
       description:
         "Explore how our buy-to-let mortgages could make it easier to buy your rental property.",
-      icon: "/buy-to-let.jpg",
+      icon: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=600&auto=format&fit=crop",
       link: "/mortgages/buy-to-let",
     },
   ];
@@ -75,26 +77,30 @@ const Mortgage = () => {
       title: "10 Steps to buying your own home",
       description:
         "From saving for a deposit, to exchange and completion, we guide you through the process.",
-      image: "/steps-to-buying.jpg",
+      image:
+        "https://images.unsplash.com/photo-1523217582562-09d0def993a6?q=80&w=600&auto=format&fit=crop",
     },
     {
       title: "What's remortgaging?",
       description:
         "Take a look at our video, with an introduction to remortgaging and how it works.",
-      image: "/what-is-remortgaging.jpg",
+      image:
+        "https://images.unsplash.com/photo-1554469384-e58fb1622ed4?q=80&w=600&auto=format&fit=crop",
       isVideo: true,
     },
     {
       title: "Should you remortgage?",
       description:
         "Here are 5 common reasons to remortgage, to help you decide if it's right for you.",
-      image: "/should-you-remortgage.jpg",
+      image:
+        "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?q=80&w=600&auto=format&fit=crop",
     },
     {
       title: "How to switch your mortgage rate",
       description:
         "Find out if switching rates with your current lender could help save you money.",
-      image: "/switch-rate.jpg",
+      image:
+        "https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=600&auto=format&fit=crop",
     },
   ];
 
@@ -190,11 +196,12 @@ const Mortgage = () => {
               <Link
                 key={index}
                 to="#"
-                className="group flex flex-col bg-white shadow-sm hover:shadow-md transition-shadow duration-300"
+                className="group flex flex-col bg-white shadow-sm hover:shadow-md transition-shadow duration-300 rounded-sm overflow-hidden"
               >
                 {item.hasImage && (
+                  /* INCREASED HEIGHT: From aspect-ratio to fixed min-height for better verticality */
                   <div
-                    className={`aspect-[16/7] w-full overflow-hidden ${item.bgColor}`}
+                    className={`h-[320px] md:h-[400px] w-full overflow-hidden ${item.bgColor}`}
                   >
                     <img
                       src={item.image}
@@ -240,7 +247,8 @@ const Mortgage = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {mortgageTypes.map((item, index) => (
               <div key={index} className="flex flex-col group">
-                <div className="mb-6 overflow-hidden rounded-sm bg-gray-50 aspect-video lg:aspect-video">
+                {/* INCREASED HEIGHT: Fixed height for grid thumbnails */}
+                <div className="mb-6 overflow-hidden rounded-sm bg-gray-50 h-64">
                   <img
                     src={item.icon}
                     alt={item.title}
@@ -291,9 +299,10 @@ const Mortgage = () => {
                 ways you could reduce your monthly payments.
               </p>
             </div>
-            <div className="flex-[1.5] relative min-h-[300px] overflow-hidden rounded-sm">
+            {/* INCREASED HEIGHT: Banner image now has a substantial min-height */}
+            <div className="flex-[1.5] relative min-h-[400px] md:min-h-[500px] overflow-hidden rounded-sm">
               <img
-                src="/cost-of-living.jpg"
+                src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=1000&auto=format&fit=crop"
                 alt="Living"
                 className="absolute inset-0 w-full h-full object-cover"
               />
@@ -306,7 +315,8 @@ const Mortgage = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {articles.map((article, index) => (
               <div key={index} className="flex flex-col group cursor-pointer">
-                <div className="relative aspect-video mb-6 overflow-hidden bg-gray-100">
+                {/* INCREASED HEIGHT: Small articles grid cards */}
+                <div className="relative h-64 mb-6 overflow-hidden bg-gray-100">
                   <img
                     src={article.image}
                     alt={article.title}
@@ -355,19 +365,27 @@ const Mortgage = () => {
                   className="w-full py-6 flex items-center justify-between text-left group"
                 >
                   <span
-                    className={`text-lg md:text-xl font-medium transition-colors ${openIndex === index ? "text-[#db0011]" : "group-hover:text-[#db0011]"}`}
+                    className={`text-lg md:text-xl font-medium transition-colors ${
+                      openIndex === index
+                        ? "text-[#db0011]"
+                        : "group-hover:text-[#db0011]"
+                    }`}
                   >
                     {faq.question}
                   </span>
                   <svg
-                    className={`w-5 h-5 fill-[#db0011] transform transition-transform ${openIndex === index ? "rotate-180" : ""}`}
+                    className={`w-5 h-5 fill-[#db0011] transform transition-transform ${
+                      openIndex === index ? "rotate-180" : ""
+                    }`}
                     viewBox="0 0 20 20"
                   >
                     <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
                   </svg>
                 </button>
                 <div
-                  className={`overflow-hidden transition-all duration-300 ${openIndex === index ? "max-h-[500px] pb-8" : "max-h-0"}`}
+                  className={`overflow-hidden transition-all duration-300 ${
+                    openIndex === index ? "max-h-[500px] pb-8" : "max-h-0"
+                  }`}
                 >
                   <div className="text-gray-700 text-lg leading-relaxed">
                     {faq.answer}

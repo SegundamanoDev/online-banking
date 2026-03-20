@@ -1,198 +1,246 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import {
+  Wifi,
+  ShieldCheck,
+  ChevronRight,
+  TrendingUp,
+  Award,
+} from "lucide-react";
 
 const Cards = () => {
   const creditCards = [
     {
-      title: "Balance Transfer Credit Card",
+      title: "UCB Balance Transfer",
       description:
-        "Enjoy up to 36 months interest-free for balance transfers (3.19% fee, min £5). 24.9% APR (variable).",
-      category: "Credit Cards",
+        "Enjoy up to 36 months interest-free for balance transfers (3.19% fee, min $5). 24.9% APR (variable).",
+      category: "Asset Management",
+      isPremium: false,
     },
     {
-      title: "Purchase Plus Credit Card",
+      title: "UCB Purchase Plus",
       description:
-        "Up to 20 months interest-free purchases and 17 months interest-free balance transfers (3.49% fee). 24.9% APR (variable).",
-      category: "Credit Cards",
+        "Up to 20 months interest-free purchases and 17 months interest-free balance transfers. 24.9% APR (variable).",
+      category: "Liquidity",
+      isPremium: false,
     },
     {
-      title: "Rewards Credit Card",
+      title: "UCB Rewards Elite",
       description:
-        "Earn reward points on eligible purchases you make. 26.9% APR (variable).",
+        "Earn high-yield reward points on every eligible transaction. 26.9% APR (variable).",
       category: "Rewards",
+      isPremium: true,
     },
     {
-      title: "Classic Credit Card",
+      title: "UCB Credit Builder",
       description:
-        "Designed to help you improve or start building your credit rating. 29.9% APR (variable).",
-      category: "Credit Building",
+        "Precision-engineered to help you establish or repair your credit profile. 29.9% APR (variable).",
+      category: "Credit Strategy",
+      isPremium: false,
     },
     {
-      title: "Premier Credit Card",
+      title: "UCB Elite Mastercard",
       description:
-        "Travel benefits and rewards with no annual fee. Get 20,000 points when you spend £2,000 in 90 days. For Premier customers.",
+        "Global travel benefits and bespoke rewards. Get 20,000 points when you spend $2,000 in 90 days.",
       category: "Premium",
+      isPremium: true,
     },
     {
-      title: "Premier World Elite Mastercard",
+      title: "UCB World Elite",
       description:
-        "Exclusive travel benefits. Get 60,000 points when you spend £3,000 in 90 days. £290 annual fee. 100.2% APR (variable).",
-      category: "Premium",
-    },
-    {
-      title: "Student Credit Card",
-      description:
-        "A purpose-built card for existing HSBC Student Bank account holders. 18.9% APR (variable).",
-      category: "Student",
+        "The pinnacle of UCB banking. 60,000 points bonus, exclusive concierge, and global protection.",
+      category: "Private Wealth",
+      isPremium: true,
     },
   ];
+
   const footnotes = [
-    "Eligible spend excludes cash advances, fees, balance transfers, cheques, refunds, interest or any other charges.",
-    "To receive the 20,000 reward points, you need to have been approved for this card and spent £2,000 on eligible purchases in the first 90 days of your card membership. Purchases made by the main and / or any additional cardholder during the first 90 days of account opening will count towards the £2,000 qualifying spend. The offer is limited to a single award of 20,000 reward points per account, regardless of the number of additional cardholders, or any spend in excess of £2,000. The reward points will be awarded 91 days after account opening, unless we've delayed applying one or more qualifying purchases made during the first 90 days to your account. In this case, the points will be awarded once the purchases have been applied. Offer can be withdrawn at any time.",
-    "Welcome bonus points offer valid from 2 March 2026 to 28 May 2026. To benefit from this offer, you need to have applied for the card before midnight on 28 May 2026. Purchases made by the main and / or any additional cardholder during the first 90 days of account opening will count towards the £3,000 qualifying spend. The offer is limited to a single award of 60,000 points per account, regardless of the number of additional cardholders, or any spend in excess of £3,000. The reward points will be awarded in two sets, one of 40,000 and one of 20,000. These will be awarded 91 days after account opening, unless we’ve delayed applying one or more qualifying purchases made during the first 90 days to your account. In this case the points will be awarded once they’ve been applied.",
+    "UCB Shield Protection: Eligible spend excludes cash advances, fees, balance transfers, or gambling transactions.",
+    "Elite Rewards: 20,000 bonus points awarded after qualifying spend of $2,000 within the first 90 days of account activation.",
+    "UCB Private Wealth: World Elite applicants are subject to enhanced liquidity and status verification.",
   ];
+
   return (
-    <div className="flex flex-col min-h-screen bg-white">
+    <div className="flex flex-col min-h-screen bg-white font-sans antialiased">
       {/* 1. HEADER SECTION */}
-      <header className="bg-white pt-16 pb-12 border-b border-gray-100">
+      <header className="bg-white pt-20 pb-12 border-b border-slate-50">
         <div className="max-w-6xl mx-auto px-4 md:px-6">
-          <h1 className="text-4xl md:text-5xl lg:text-[52px] font-bold text-gray-900 mb-6 tracking-tight leading-tight">
-            Explore our credit cards
+          <span className="text-[10px] font-black text-emerald-600 uppercase tracking-[0.4em] mb-4 block italic">
+            United Capital Banking
+          </span>
+          <h1 className="text-4xl md:text-5xl lg:text-[64px] font-black text-slate-900 mb-6 tracking-tighter leading-none italic">
+            Elite <span className="text-emerald-500">Credit</span> Systems
           </h1>
-          <p className="text-xl md:text-2xl text-gray-700 max-w-3xl leading-relaxed">
-            From transferring a balance, earning rewards or building your credit
-            score, there's a card for every need.
+          <p className="text-xl text-slate-500 max-w-2xl leading-relaxed font-medium">
+            Deploying intelligent capital solutions. From liquidity management
+            to bespoke global rewards, our card systems are built for the modern
+            architect.
           </p>
         </div>
       </header>
 
-      {/* 2. CHARCOAL PROMO SECTION */}
-      <section className="bg-[#333333] overflow-hidden">
-        <div className="max-w-6xl mx-auto px-4 md:px-6">
-          {/* flex-col: stacked on mobile
-        md:flex-row: side-by-side on desktop
-        items-stretch: ensures the image height matches the text height 
-    */}
+      {/* 2. BRAND PROMO SECTION */}
+      <section className="bg-slate-900 overflow-hidden relative">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-emerald-500/10 via-transparent to-transparent"></div>
+        <div className="max-w-6xl mx-auto px-4 md:px-6 relative z-10">
           <div className="flex flex-col md:flex-row items-stretch">
-            {/* 1. Text Content - flex-1 takes up half the space */}
-            <div className="flex-1 py-12 md:py-20 pr-0 md:pr-12 text-white flex flex-col justify-center">
-              <h2 className="text-3xl md:text-4xl font-bold mb-6 tracking-tight leading-tight">
-                New to HSBC?
+            <div className="flex-1 py-16 md:py-24 pr-0 md:pr-12 text-white flex flex-col justify-center">
+              <h2 className="text-3xl md:text-5xl font-black mb-6 tracking-tighter italic">
+                The UCB <span className="text-emerald-400">Standard</span>
               </h2>
-              <p className="text-lg md:text-xl text-gray-300 mb-8 leading-relaxed max-w-md">
-                Even if you don't have a current account with us, you can still
-                apply for our Balance Transfer or Purchase Plus Credit Card.
+              <p className="text-lg text-slate-400 mb-8 leading-relaxed max-w-md font-medium">
+                New to United Capital? Our digital-first application process
+                ensures asset deployment in minutes, even without a prior UCB
+                account.
               </p>
+              <div className="flex gap-4">
+                {/* Changed button to div (non-clickable) */}
+                <div className="px-8 py-4 bg-emerald-500 text-slate-900 font-black text-xs uppercase tracking-widest rounded-full italic cursor-default">
+                  System Active
+                </div>
+              </div>
             </div>
 
-            {/* 2. Image Container - flex-1 takes up the other half */}
-            <div className="flex-1 relative min-h-[300px] md:min-h-full">
-              <img
-                src="/cq5dam.web.1280.1280 (1).jpeg"
-                alt="Compare products"
-                /* md:absolute ensures the image fills the flex container height 
-             object-cover prevents stretching 
-          */
-                className="w-full h-full md:absolute md:inset-0 object-cover object-center"
-              />
+            <div className="flex-1 relative min-h-[400px] flex items-center justify-center py-12">
+              <div className="relative aspect-[1.586/1] w-full max-w-md rounded-[24px] p-8 text-white overflow-hidden shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)] bg-slate-800 ring-1 ring-white/10">
+                <div className="absolute inset-0 bg-gradient-to-br from-slate-800 via-slate-900 to-black"></div>
+                <div className="relative z-10 h-full flex flex-col justify-between">
+                  <div className="flex justify-between items-start">
+                    <div className="flex flex-col">
+                      <span className="text-[8px] font-black tracking-[0.4em] text-emerald-500 uppercase">
+                        United Capital
+                      </span>
+                      <span className="italic font-black text-xl tracking-tighter -mt-1">
+                        UCB <span className="text-emerald-500">Elite</span>
+                      </span>
+                    </div>
+                    <Wifi size={18} className="opacity-40 rotate-90" />
+                  </div>
+                  <div className="w-12 h-9 bg-gradient-to-br from-yellow-100 via-yellow-400 to-yellow-600 rounded-md opacity-80 shadow-inner"></div>
+                  <p className="text-xl font-mono tracking-[0.2em] text-white/90">
+                    •••• •••• •••• 8842
+                  </p>
+                  <div className="flex justify-between items-end border-t border-white/5 pt-4">
+                    <div className="flex gap-8">
+                      <div>
+                        <p className="text-[6px] uppercase tracking-[0.3em] text-slate-500 font-black">
+                          Cardholder
+                        </p>
+                        <p className="text-[10px] font-black italic uppercase">
+                          VALUED CLIENT
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-[6px] uppercase tracking-[0.3em] text-slate-500 font-black">
+                          Expiry
+                        </p>
+                        <p className="text-[10px] font-bold">09/28</p>
+                      </div>
+                    </div>
+                    <div className="flex -space-x-2">
+                      <div className="w-6 h-6 rounded-full bg-[#EB001B] opacity-90"></div>
+                      <div className="w-6 h-6 rounded-full bg-[#F79E1B] opacity-80 mix-blend-screen"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* 3. PRODUCT GRID SECTION */}
-      <main className="bg-white py-16">
-        <div className="max-w-[1440px] mx-auto px-4 sm:px-6">
-          <div className="flex flex-col items-center justify-between mb-10">
-            <h2 className="text-3xl font-bold text-gray-900 border-l-4 border-[#db0011] pl-4">
-              Explore credit cards
-            </h2>
-            <p>
-              Credit is subject to status, affordability and terms and
-              conditions. At the end of any promotional period, balance
-              transfers and purchases will revert to the standard variable rate.
-            </p>
+      <main className="bg-white py-20">
+        <div className="max-w-6xl mx-auto px-4 md:px-6">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+            <div>
+              <h2 className="text-2xl font-black text-slate-900 italic tracking-tight mb-2">
+                Deployment <span className="text-emerald-500">Options</span>
+              </h2>
+              <p className="text-slate-500 font-medium text-sm">
+                Credit subject to status. Secured by UCB AI-driven behavioral
+                monitoring.
+              </p>
+            </div>
           </div>
 
-          {/* 10-Column Responsive Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {creditCards.map((account, index) => (
               <div
                 key={index}
-                className="flex flex-col bg-white border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 group cursor-pointer"
+                className="group relative flex flex-col bg-white border border-slate-100 p-8 rounded-[2rem] transition-all duration-500"
               >
-                {/* Card Top: ATM Card Graphic */}
-                <div className="p-3 bg-gray-50/50">
-                  <div className="relative aspect-[1.58/1] w-full bg-gradient-to-br from-[#444] to-[#111] rounded-md overflow-hidden shadow-md group-hover:scale-[1.03] transition-transform">
-                    {/* Chip */}
-                    <div className="absolute top-[20%] left-[10%] w-[18%] h-[25%] bg-gradient-to-tr from-yellow-600 to-yellow-200 rounded-sm opacity-80" />
-                    {/* Brand */}
-                    <div className="absolute top-[15%] right-[10%] text-white font-bold italic text-[8px] tracking-tighter">
-                      HSBC
-                    </div>
-                    {/* Card Numbers Placeholder */}
-                    <div className="absolute bottom-[20%] left-[10%] space-x-1 flex">
-                      <div className="w-4 h-1 bg-white/20 rounded-full" />
-                      <div className="w-4 h-1 bg-white/20 rounded-full" />
-                    </div>
+                <div className="mb-6 flex justify-between items-start">
+                  <div
+                    className={`p-3 rounded-2xl ${
+                      account.isPremium
+                        ? "bg-slate-900 text-emerald-400"
+                        : "bg-emerald-50 text-emerald-600"
+                    }`}
+                  >
+                    {account.isPremium ? (
+                      <Award size={24} />
+                    ) : (
+                      <TrendingUp size={24} />
+                    )}
                   </div>
-                </div>
-
-                {/* Card Body */}
-                <div className="p-5 flex flex-col flex-grow bg-white">
-                  {/* Category Tag - High Contrast Red */}
-                  <span className="text-sm uppercase tracking-wider text-[#db0011] font-bold mb-2">
+                  <span className="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em]">
                     {account.category}
                   </span>
+                </div>
 
-                  {/* Title - Set to 18px (text-lg) to stand out above the 16px body text */}
-                  <h3 className="text-lg font-bold text-gray-900 mb-3 leading-tight min-h-[56px] group-hover:text-[#db0011] transition-colors">
-                    {account.title}
-                  </h3>
+                <h3 className="text-xl font-black text-slate-900 mb-3 italic tracking-tight transition-colors">
+                  {account.title}
+                </h3>
 
-                  {/* Description - Exactly 16px (text-base) as requested */}
-                  <p className="text-base text-gray-700 leading-relaxed mb-6 flex-grow">
-                    {account.description}
-                  </p>
+                <p className="text-sm text-slate-500 leading-relaxed font-medium mb-8 flex-grow">
+                  {account.description}
+                </p>
 
-                  {/* Action Link - Bold and clear at 16px */}
-                  <Link
-                    to={`/accounts/${account.title.toLowerCase().replace(/\s+/g, "-")}`}
-                    className="mt-auto inline-flex items-center text-base font-bold text-gray-900 group-hover:text-[#db0011] border-b-2 border-transparent hover:border-[#db0011] pb-1 transition-all w-fit"
-                  >
-                    <span>Learn more</span>
-                    <svg
-                      className="ml-2 w-3 h-3 fill-current"
-                      viewBox="0 0 11 16"
-                    >
-                      <path d="M.271 16l8-8-8-8h2.546l7.998 8-7.998 8z" />
-                    </svg>
-                  </Link>
+                <div className="flex items-center justify-between pt-6 border-t border-slate-50">
+                  <span className="text-[10px] font-black uppercase tracking-widest text-slate-400 italic">
+                    Asset Parameters
+                  </span>
+                  <div className="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center text-slate-300">
+                    <ChevronRight size={16} />
+                  </div>
                 </div>
               </div>
             ))}
           </div>
         </div>
-        <section className="bg-white py-12 border-t border-gray-100">
+
+        {/* 4. FOOTNOTES SECTION */}
+        <section className="mt-20 pt-12 border-t border-slate-100">
           <div className="max-w-6xl mx-auto px-4 md:px-6">
-            <div className="max-w-4xl">
-              {" "}
-              {/* Keeping legal text narrow for readability */}
-              <h2 className="text-xl font-bold text-gray-900 mb-6">
-                Additional information:
-              </h2>
-              <ol className="list-decimal pl-5 space-y-4">
-                {footnotes.map((note, index) => (
-                  <li
-                    key={index}
-                    className="text-sm text-gray-600 leading-relaxed"
-                  >
-                    <div id={`fn-${index}`} className="pl-2">
+            <div className="bg-slate-50 p-8 md:p-12 rounded-[2.5rem] flex flex-col md:flex-row gap-10">
+              <div className="md:w-1/3">
+                <div className="flex items-center gap-3 mb-4">
+                  <ShieldCheck className="text-emerald-600" size={24} />
+                  <h4 className="font-black italic text-slate-900 tracking-tight">
+                    UCB Protocol
+                  </h4>
+                </div>
+                <p className="text-xs text-slate-500 font-medium leading-relaxed">
+                  All credit facilities are monitored 24/7 by our security
+                  systems. United Capital maintains zero-liability protection on
+                  all Elite and World Elite Mastercard tiers.
+                </p>
+              </div>
+              <div className="md:w-2/3">
+                <ol className="space-y-4">
+                  {footnotes.map((note, index) => (
+                    <li
+                      key={index}
+                      className="text-[11px] text-slate-400 font-medium flex gap-3"
+                    >
+                      <span className="text-emerald-500 font-black">
+                        0{index + 1}
+                      </span>
                       {note}
-                    </div>
-                  </li>
-                ))}
-              </ol>
+                    </li>
+                  ))}
+                </ol>
+              </div>
             </div>
           </div>
         </section>

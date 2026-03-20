@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+// 1. Import Toaster and toast
+import toast, { Toaster } from "react-hot-toast";
 import {
   Send,
   RefreshCw,
@@ -12,13 +14,14 @@ import {
   Lock,
   X,
 } from "lucide-react";
+import { useTransferMoneyMutation } from "../services/api";
 
 const Transfer = () => {
-  const [activeTab, setActiveTab] = useState("someone");
-  const [isProcessing, setIsProcessing] = useState(false);
-  const [showSuccess, setShowSuccess] = useState(false);
+  const [transferMoney, { isLoading: isProcessing }] =
+    useTransferMoneyMutation();
 
-  // New States for Security
+  const [activeTab, setActiveTab] = useState("someone");
+  const [showSuccess, setShowSuccess] = useState(false);
   const [showPinModal, setShowPinModal] = useState(false);
   const [pin, setPin] = useState("");
   const [formData, setFormData] = useState({
@@ -31,44 +34,43 @@ const Transfer = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Step 1: Trigger the PIN Modal
   const initiateTransfer = (e) => {
     e.preventDefault();
+    // Basic validation before opening modal
+    if (formData.amount <= 0) {
+      return toast.error("Please enter a valid amount.");
+    }
     setShowPinModal(true);
   };
 
-  // Step 2: Final Authorization with PIN
+  // 2. Updated Confirm Logic with Hot Toast
   const confirmTransfer = async () => {
-    setIsProcessing(true);
+    // Create a loading state toast
+    const loadingToast = toast.loading("Verifying security credentials...");
 
     try {
-      const response = await fetch("/api/transactions/transfer", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        body: JSON.stringify({ ...formData, pin }),
-      });
+      await transferMoney({
+        recipientAccountNumber: formData.recipientAccountNumber,
+        amount: formData.amount,
+        description: formData.description,
+        pin: pin,
+      }).unwrap();
 
-      const data = await response.json();
-
-      if (response.ok) {
-        setShowPinModal(false);
-        setShowSuccess(true);
-      } else {
-        alert(data.message); // Handle invalid PIN or insufficient funds
-      }
-    } catch (error) {
-      console.error("Transfer failed", error);
-    } finally {
-      setIsProcessing(false);
+      // Success!
+      toast.success("Transfer Authorized Successfully", { id: loadingToast });
+      setShowPinModal(false);
+      setShowSuccess(true);
+      setPin("");
+    } catch (err) {
+      // Error!
+      const errorMessage = err?.data?.message || "Authorization failed.";
+      toast.error(errorMessage, { id: loadingToast });
     }
   };
 
   if (showSuccess) {
     return (
-      <div className="max-w-xl mx-auto mt-10 p-10 bg-white rounded-[2.5rem] border border-slate-100 shadow-2xl text-center">
+      <div className="max-w-xl mx-auto mt-10 p-10 bg-white rounded-[2.5rem] border border-slate-100 shadow-2xl text-center animate-in zoom-in-95 duration-500">
         <div className="w-24 h-24 bg-emerald-50 text-emerald-500 rounded-full flex items-center justify-center mx-auto mb-8">
           <CheckCircle2 size={56} />
         </div>
@@ -90,7 +92,9 @@ const Transfer = () => {
 
   return (
     <div className="max-w-5xl mx-auto space-y-10">
-      {/* HEADER SECTION */}
+      {/* 3. Add the Toaster component here to render notifications */}
+      <Toaster position="top-center" reverseOrder={false} />
+
       <div className="flex flex-col gap-2 px-2">
         <h2 className="text-4xl font-black tracking-tighter text-slate-900 italic">
           Move Capital
@@ -103,7 +107,6 @@ const Transfer = () => {
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-10">
         <div className="lg:col-span-3 bg-white rounded-[2.5rem] border border-slate-50 p-10 shadow-sm">
           <form onSubmit={initiateTransfer} className="space-y-8">
-            {/* RECIPIENT ACCOUNT */}
             <div>
               <label className="block text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-4">
                 Recipient Account Number
@@ -118,7 +121,6 @@ const Transfer = () => {
               />
             </div>
 
-            {/* AMOUNT */}
             <div>
               <label className="block text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-4">
                 Allocation Amount
@@ -138,7 +140,6 @@ const Transfer = () => {
               </div>
             </div>
 
-            {/* DESCRIPTION */}
             <div>
               <label className="block text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-4">
                 Reference Memo
@@ -161,7 +162,6 @@ const Transfer = () => {
           </form>
         </div>
 
-        {/* SIDEBAR PLACEHOLDER */}
         <div className="lg:col-span-2">
           <div className="bg-slate-900 rounded-[2.5rem] p-8 text-white">
             <ShieldCheck size={24} className="text-emerald-500 mb-4" />
@@ -175,7 +175,6 @@ const Transfer = () => {
         </div>
       </div>
 
-      {/* --- PIN AUTHORIZATION MODAL --- */}
       {showPinModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-slate-900/60 backdrop-blur-md animate-in fade-in duration-300">
           <div className="bg-white w-full max-w-md rounded-[2.5rem] p-10 shadow-2xl relative overflow-hidden">

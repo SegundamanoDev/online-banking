@@ -1081,6 +1081,7 @@ import {
   LogOut,
   LayoutDashboard,
   ShieldCheck,
+  Landmark,
 } from "lucide-react";
 // Assuming you use Redux for auth state. Adjust imports to your actual auth logic.
 import { useSelector, useDispatch } from "react-redux";
@@ -1104,7 +1105,6 @@ const Navbar = () => {
   const segments = [
     { name: "Personal", path: "/" },
     { name: "Private", path: "/private" },
-    { name: "Business", path: "/business" },
     { name: "Corporate", path: "/corporate" },
   ];
 
@@ -1143,15 +1143,10 @@ const Navbar = () => {
             <div className="flex justify-between items-center h-16 md:h-20">
               {/* BRAND LOGO */}
               <Link to="/" className="flex items-center group">
-                <div className="h-10 w-10 bg-emerald-600 rounded-xl flex items-center justify-center mr-3 group-hover:bg-slate-900 transition-all shadow-lg shadow-emerald-100">
-                  <Globe className="text-white" size={20} />
-                </div>
-                <div className="flex flex-col">
-                  <span className="text-xl font-black tracking-tighter text-gray-900 leading-none">
-                    UNITED<span className="text-emerald-600">CAPITAL</span>
-                  </span>
-                  <span className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.3em] mt-0.5">
-                    BANK
+                <div className="flex items-center gap-2">
+                  <Landmark className="text-slate-900" size={24} />
+                  <span className="font-black tracking-[0.2em] text-sm text-slate-900">
+                    UNITED CAPITAL
                   </span>
                 </div>
               </Link>
@@ -1167,7 +1162,7 @@ const Navbar = () => {
                       Register
                     </NavLink>
                     <Link
-                      to="/logon"
+                      to="/login"
                       className="bg-emerald-600 text-white px-8 py-3 font-bold text-xs uppercase tracking-widest hover:bg-slate-900 transition-all shadow-lg shadow-emerald-100"
                     >
                       Log on
@@ -1261,7 +1256,7 @@ const Navbar = () => {
                       Register
                     </Link>
                     <Link
-                      to="/logon"
+                      to="/login"
                       onClick={() => setIsOpen(false)}
                       className="block w-full bg-emerald-600 text-white py-5 text-center font-bold text-sm uppercase tracking-[0.2em]"
                     >

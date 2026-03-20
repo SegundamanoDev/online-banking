@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setCredentials } from "../services/authSlice";
-import { useLoginMutation } from "../services/api"; // Import the hook
+import { useLoginMutation } from "../services/api";
 import {
   ShieldCheck,
   Lock,
@@ -36,13 +36,11 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Execute the mutation
       const result = await login(formData).unwrap();
 
       if (result.twoFactorRequired) {
         setIs2FA(true);
       } else {
-        // Handle successful login
         dispatch(
           setCredentials({
             user: result.user,
@@ -50,7 +48,6 @@ const Login = () => {
           }),
         );
 
-        // Redirect based on role
         if (result.user.role === "admin") {
           navigate("/admin/dashboard");
         } else {
@@ -58,7 +55,6 @@ const Login = () => {
         }
       }
     } catch (err) {
-      // RTK Query puts the backend error in err.data
       alert(
         err?.data?.message ||
           "Authentication Failed. Please check your credentials.",
@@ -113,7 +109,8 @@ const Login = () => {
                       name="customerId"
                       required
                       placeholder="UC-00000000"
-                      className="w-full bg-slate-50 border border-slate-100 rounded-2xl py-4 pl-12 pr-4 focus:ring-2 focus:ring-emerald-500/20 outline-none"
+                      /* Fixed: Added explicit text color and autofill overrides */
+                      className="w-full bg-slate-50 border border-slate-100 rounded-2xl py-4 pl-12 pr-4 focus:ring-2 focus:ring-emerald-500/20 outline-none text-slate-900 placeholder:text-slate-300 autofill:text-slate-900"
                       onChange={handleInputChange}
                     />
                   </div>
@@ -132,13 +129,14 @@ const Login = () => {
                       type={showPassword ? "text" : "password"}
                       name="password"
                       required
-                      className="w-full bg-slate-50 border border-slate-100 rounded-2xl py-4 pl-12 pr-12 focus:ring-2 focus:ring-emerald-500/20 outline-none"
+                      /* Fixed: Added explicit text color */
+                      className="w-full bg-slate-50 border border-slate-100 rounded-2xl py-4 pl-12 pr-12 focus:ring-2 focus:ring-emerald-500/20 outline-none text-slate-900 autofill:text-slate-900"
                       onChange={handleInputChange}
                     />
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400"
+                      className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-emerald-600 transition-colors"
                     >
                       {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                     </button>
@@ -160,7 +158,8 @@ const Login = () => {
                   required
                   maxLength="6"
                   placeholder="••••••"
-                  className="w-full bg-slate-50 border text-center text-3xl font-black py-5 rounded-2xl tracking-[0.5em] outline-none border-emerald-100"
+                  /* Fixed: Added text-slate-900 */
+                  className="w-full bg-slate-50 border text-center text-3xl font-black py-5 rounded-2xl tracking-[0.5em] outline-none border-emerald-100 text-slate-900"
                   onChange={handleInputChange}
                 />
               </div>
@@ -169,7 +168,7 @@ const Login = () => {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-slate-900 text-white font-black py-4 rounded-2xl hover:bg-emerald-600 transition-all flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed shadow-xl shadow-slate-200"
+              className="w-full bg-slate-900 text-white font-black py-4 rounded-2xl hover:bg-emerald-600 transition-all flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed shadow-xl shadow-slate-200 active:scale-[0.98]"
             >
               {isLoading ? (
                 <Loader2 className="animate-spin" size={20} />

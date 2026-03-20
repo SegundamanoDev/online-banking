@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Outlet, useNavigate, useLocation } from "react-router-dom";
+import { Outlet, useNavigate, useLocation, Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logout } from "../../src/services/authSlice";
 import { useGetProfileQuery } from "../../src/services/api";
@@ -18,6 +18,7 @@ import {
   Lock,
   Loader2,
   LogOut,
+  Landmark,
 } from "lucide-react";
 
 const DashboardLayout = () => {
@@ -65,20 +66,16 @@ const DashboardLayout = () => {
         }`}
       >
         <div className="p-8 border-b border-white/5 flex justify-between items-center">
-          <div
-            className="flex items-center gap-3 group cursor-pointer"
-            onClick={() => navigate("/dashboard")}
-          >
-            <div className="h-10 w-10 bg-emerald-600 rounded-xl flex items-center justify-center shadow-lg shadow-emerald-900/20">
-              <Globe size={22} className="text-white" />
-            </div>
-            <div>
-              <div className="text-white font-black text-xl tracking-tighter leading-none">
-                UNITED<span className="text-emerald-500">CAPITAL</span>
-              </div>
-              <p className="text-[9px] text-emerald-500/60 mt-1.5 font-mono uppercase tracking-[0.3em]">
-                Secure Banking
-              </p>
+          <div className="flex items-center gap-3 group cursor-pointer">
+            <div className="flex items-center gap-2">
+              <Landmark
+                className="text-emerald-500 group-hover:scale-110 transition-transform"
+                size={24}
+              />
+
+              <span className="font-black tracking-[0.25em] text-sm text-white group-hover:text-emerald-400 transition-colors">
+                UNITED CAPITAL
+              </span>
             </div>
           </div>
           <button
@@ -108,23 +105,12 @@ const DashboardLayout = () => {
             active={isActive("/dashboard/transfer")}
             onClick={() => handleNavigation("/dashboard/transfer")}
           />
-          <DashboardNavItem
-            icon={<Globe size={20} />}
-            label="Global Money"
-            active={isActive("/dashboard/global")}
-            onClick={() => handleNavigation("/dashboard/global")}
-          />
+
           <DashboardNavItem
             icon={<CreditCard size={20} />}
             label="Cards"
             active={isActive("/dashboard/cards")}
             onClick={() => handleNavigation("/dashboard/cards")}
-          />
-          <DashboardNavItem
-            icon={<ShieldCheck size={20} />}
-            label="Insurance"
-            active={isActive("/dashboard/insurance")}
-            onClick={() => handleNavigation("/dashboard/insurance")}
           />
 
           {/* LOGOUT BUTTON */}
