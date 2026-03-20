@@ -5,7 +5,7 @@ export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
     // Replace with your actual backend URL if different
-    baseUrl: "https://united-capital.onrender.com",
+    baseUrl: "https://united-capital.onrender.com/api",
     prepareHeaders: (headers) => {
       const token = localStorage.getItem("token");
       if (token) {
