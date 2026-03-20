@@ -160,7 +160,7 @@ const SignUp = () => {
                   name="firstName"
                   required
                   onChange={handleInputChange}
-                  className="w-full bg-slate-50 border border-slate-100 rounded-xl py-3 px-4 focus:ring-2 focus:ring-emerald-500/20 outline-none"
+                  className="w-full bg-slate-50 border text-center text-3xl font-black py-5 rounded-2xl tracking-[0.5em] outline-none border-emerald-100 text-slate-900"
                 />
               </div>
               <div className="space-y-1">
@@ -171,7 +171,7 @@ const SignUp = () => {
                   name="lastName"
                   required
                   onChange={handleInputChange}
-                  className="w-full bg-slate-50 border border-slate-100 rounded-xl py-3 px-4 focus:ring-2 focus:ring-emerald-500/20 outline-none"
+                  className="w-full bg-slate-50 border text-center text-3xl font-black py-5 rounded-2xl tracking-[0.5em] outline-none border-emerald-100 text-slate-900"
                 />
               </div>
             </div>
