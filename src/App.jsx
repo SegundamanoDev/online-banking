@@ -26,7 +26,6 @@ import Navbar from "./components/Navbar";
 import Dashboard from "./components/Dashboard"; // This is now your "Overview"
 import DashboardLayout from "./components/DashboardLayout";
 import Transactions from "./components/Transactions";
-import Transfer from "./components/Transfer";
 import GlobalMoney from "./components/GlobalMoney";
 import DashboardCards from "./components/DashBoardCards";
 import DashboardInsurance from "./components/DashboardInsurance";
@@ -34,13 +33,31 @@ import ScrollToTop from "./components/ScrollToTop";
 import Login from "./components/SignIn";
 import SignUp from "./components/SignUp";
 import AdminDashboard from "./components/AdminDashboard";
+import InternalTransfer from "./components/InternalTransfer";
+import InternationalWire from "./components/InternationalWire";
+import AdminLayout from "./components/AdminLayout";
+import UserRegistry from "./components/UserRegistry";
+import PendingWires from "./components/PendingWires";
+import Ledger from "./components/Ledger";
+import DashboardLoan from "./components/DashboardLoan";
+import LoanUnderwriting from "./components/LoanUnderwriting";
 
 // This helper hides the Navbar on dashboard routes
 const NavigationWrapper = () => {
   const location = useLocation();
-  const isDashboard = location.pathname.startsWith("/dashboard");
 
-  return !isDashboard ? <Navbar /> : null;
+  // Define which top-level paths should HIDE the main public Navbar
+  const isDashboard = location.pathname.startsWith("/dashboard");
+  const isAdmin = location.pathname.startsWith("/admin");
+  const isLoginOrSignup =
+    location.pathname === "/login" || location.pathname === "/zondo/signup";
+
+  // If we are NOT in dashboard, admin, or auth pages, show the Navbar
+  if (!isDashboard && !isAdmin && !isLoginOrSignup) {
+    return <Navbar />;
+  }
+
+  return null;
 };
 
 function App() {
@@ -76,19 +93,31 @@ function App() {
         <Route path="/credit-cards" element={<Cards />} />
         <Route path="/loans" element={<LoansPage />} />
         <Route path="/insurance" element={<InsurancePage />} />
-        <Route path="/admin/dashboard" element={<AdminDashboard />} />
 
-        {/* --- DASHBOARD NESTED ROUTES --- */}
-        {/* We use one parent Route for /dashboard */}
         <Route path="/dashboard" element={<DashboardLayout />}>
           {/* Use 'index' as a prop on Route to show the main Dashboard content */}
           <Route index element={<Dashboard />} />
 
           <Route path="transactions" element={<Transactions />} />
-          <Route path="transfer" element={<Transfer />} />
+          <Route path="transfer/local" element={<InternalTransfer />} />
+          <Route
+            path="transfer/international"
+            element={<InternationalWire />}
+          />
           <Route path="global" element={<GlobalMoney />} />
           <Route path="cards" element={<DashboardCards />} />
           <Route path="insurance" element={<DashboardInsurance />} />
+          <Route path="loans" element={<DashboardLoan />} />
+        </Route>
+
+        <Route path="/admin" element={<AdminLayout />}>
+          <Route index element={<AdminDashboard />} />{" "}
+          {/* This matches /admin */}
+          <Route path="dashboard" element={<AdminDashboard />} />{" "}
+          <Route path="users" element={<UserRegistry />} />{" "}
+          <Route path="loans" element={<LoanUnderwriting />} />{" "}
+          <Route path="wires" element={<PendingWires />} />{" "}
+          <Route path="ledger" element={<Ledger />} />{" "}
         </Route>
 
         {/* --- 404 PAGE --- */}

@@ -4,8 +4,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
-    // Replace with your actual backend URL if different
-    baseUrl: "https://united-capital.onrender.com/api",
+    baseUrl: "https://united-capital.onrender.com",
     prepareHeaders: (headers) => {
       const token = localStorage.getItem("token");
       if (token) {
@@ -15,9 +14,10 @@ export const apiSlice = createApi({
     },
   }),
   // Tags allow RTK Query to know when to auto-refresh data
-  tagTypes: ["User", "Transaction", "Account"],
+  tagTypes: ["User", "Transaction", "Account", "Admin"],
 
   endpoints: (builder) => ({
+    /* --- AUTHENTICATION --- */
     login: builder.mutation({
       query: (credentials) => ({
         url: "/auth/login",
@@ -32,30 +32,12 @@ export const apiSlice = createApi({
         body: userData,
       }),
     }),
-    // 1. GET USER PROFILE & ACCOUNT
+
+    /* --- USER OPERATIONS --- */
     getProfile: builder.query({
       query: () => "/users/me",
       providesTags: ["User", "Account"],
     }),
-
-    // 2. GET TRANSACTION HISTORY
-    getTransactions: builder.query({
-      query: () => "/transactions/history",
-      providesTags: ["Transaction"],
-    }),
-
-    // 3. TRANSFER MONEY (MUTATION)
-    // We invalidate 'Account' and 'Transaction' so the dashboard updates instantly
-    transferMoney: builder.mutation({
-      query: (transferData) => ({
-        url: "/transactions/transfer",
-        method: "POST",
-        body: transferData,
-      }),
-      invalidatesTags: ["Account", "Transaction"],
-    }),
-
-    // 4. UPDATE USER PROFILE
     updateProfile: builder.mutation({
       query: (profileData) => ({
         url: "/users/profile",
@@ -65,27 +47,38 @@ export const apiSlice = createApi({
       invalidatesTags: ["User"],
     }),
 
-    // 5. GET STATEMENT (Returns the URL or raw data)
+    /* --- TRANSACTION & BANKING --- */
+    getTransactions: builder.query({
+      query: () => "/transactions/history",
+      providesTags: ["Transaction"],
+    }),
+    transferMoney: builder.mutation({
+      query: (transferData) => ({
+        url: "/transactions/transfer",
+        method: "POST",
+        body: transferData,
+      }),
+      invalidatesTags: ["Account", "Transaction"],
+    }),
     getStatement: builder.query({
       query: () => "/transactions/statement",
     }),
 
+    /* --- CREDIT FACILITIES (LOANS) --- */
+    requestLoan: builder.mutation({
+      query: (loanData) => ({
+        url: "/transactions/loans/request",
+        method: "POST",
+        body: loanData,
+      }),
+      invalidatesTags: ["Account"],
+    }),
+
+    /* --- ADMINISTRATIVE CORE --- */
     getAdminUsers: builder.query({
       query: () => "/admin/users",
       providesTags: ["Admin", "User"],
     }),
-    // Admin Deposit (Mutation)
-    adminDeposit: builder.mutation({
-      query: (depositData) => ({
-        url: "/admin/deposit",
-        method: "POST",
-        body: depositData,
-      }),
-      // This forces the user list and account balances to refresh
-      invalidatesTags: ["Admin", "Account", "Transaction"],
-    }),
-
-    // Update User Status (Block/Active)
     updateUserStatus: builder.mutation({
       query: ({ id, status }) => ({
         url: `/admin/users/${id}/status`,
@@ -94,11 +87,54 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: ["Admin"],
     }),
-
-    // Get System-wide Stats
+    adminDeposit: builder.mutation({
+      query: (depositData) => ({
+        url: "/admin/deposit",
+        method: "POST",
+        body: depositData,
+      }),
+      invalidatesTags: ["Admin", "Account", "Transaction"],
+    }),
     getSystemStats: builder.query({
       query: () => "/admin/stats",
       providesTags: ["Admin"],
+    }),
+
+    /* --- ADMINISTRATIVE LEDGER & WIRES --- */
+    getAdminTransactions: builder.query({
+      query: () => "/admin/transactions",
+      providesTags: ["Transaction", "Admin"],
+    }),
+    getPendingWires: builder.query({
+      query: () => "/admin/wires/pending",
+      providesTags: ["Transaction"],
+    }),
+    approveWire: builder.mutation({
+      query: (transactionId) => ({
+        url: `/admin/transactions/${transactionId}/approve-wire`,
+        method: "PATCH",
+      }),
+      invalidatesTags: ["Transaction", "Admin", "Account"],
+    }),
+
+    /* --- ADMINISTRATIVE LOAN UNDERWRITING --- */
+    getLoanRequests: builder.query({
+      query: () => "/admin/loans/pending",
+      providesTags: ["Admin", "Transaction"],
+    }),
+    approveLoan: builder.mutation({
+      query: (loanId) => ({
+        url: `/admin/loans/${loanId}/approve`,
+        method: "PATCH",
+      }),
+      invalidatesTags: ["Admin", "Account", "Transaction"],
+    }),
+    rejectLoan: builder.mutation({
+      query: (loanId) => ({
+        url: `/admin/loans/${loanId}/reject`,
+        method: "PATCH",
+      }),
+      invalidatesTags: ["Admin"],
     }),
   }),
 });
@@ -108,12 +144,19 @@ export const {
   useLoginMutation,
   useRegisterMutation,
   useGetProfileQuery,
+  useUpdateProfileMutation,
   useGetTransactionsQuery,
   useTransferMoneyMutation,
-  useUpdateProfileMutation,
   useGetStatementQuery,
+  useRequestLoanMutation,
   useGetAdminUsersQuery,
-  useAdminDepositMutation,
   useUpdateUserStatusMutation,
+  useAdminDepositMutation,
   useGetSystemStatsQuery,
+  useGetAdminTransactionsQuery,
+  useGetPendingWiresQuery,
+  useApproveWireMutation,
+  useGetLoanRequestsQuery,
+  useApproveLoanMutation,
+  useRejectLoanMutation,
 } = apiSlice;

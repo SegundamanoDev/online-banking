@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Outlet, useNavigate, useLocation, Link } from "react-router-dom";
+import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logout } from "../../src/services/authSlice";
 import { useGetProfileQuery } from "../../src/services/api";
 import {
   LayoutGrid,
-  ShieldCheck,
   Send,
   Globe,
   CreditCard,
@@ -15,10 +14,10 @@ import {
   Bell,
   EyeOff,
   Eye,
-  Lock,
   Loader2,
   LogOut,
   Landmark,
+  ShieldCheck,
 } from "lucide-react";
 
 const DashboardLayout = () => {
@@ -30,7 +29,6 @@ const DashboardLayout = () => {
   const [showBalances, setShowBalances] = useState(true);
   const [greeting, setGreeting] = useState("");
 
-  // Fetch User Data
   const { data: profileData, isLoading } = useGetProfileQuery();
 
   useEffect(() => {
@@ -53,7 +51,7 @@ const DashboardLayout = () => {
   };
 
   const handleLogout = () => {
-    dispatch(logout()); // Clears Redux state and LocalStorage
+    dispatch(logout());
     navigate("/login");
   };
 
@@ -67,64 +65,94 @@ const DashboardLayout = () => {
       >
         <div className="p-8 border-b border-white/5 flex justify-between items-center">
           <div className="flex items-center gap-3 group cursor-pointer">
-            <div className="flex items-center gap-2">
-              <Landmark
-                className="text-emerald-500 group-hover:scale-110 transition-transform"
-                size={24}
-              />
-
-              <span className="font-black tracking-[0.25em] text-sm text-white group-hover:text-emerald-400 transition-colors">
-                UNITED CAPITAL
-              </span>
-            </div>
+            <Landmark className="text-emerald-500" size={24} />
+            <span className="font-black tracking-[0.25em] text-sm text-white">
+              UNITED CAPITAL
+            </span>
           </div>
           <button
-            className="lg:hidden p-2 text-gray-400 hover:text-white"
+            className="lg:hidden"
             onClick={() => setMobileMenuOpen(false)}
           >
             <X size={24} />
           </button>
         </div>
 
-        <nav className="flex-1 px-4 space-y-1.5 mt-8">
-          <DashboardNavItem
-            icon={<LayoutGrid size={20} />}
-            label="Overview"
-            active={isActive("/dashboard")}
-            onClick={() => handleNavigation("/dashboard")}
-          />
-          <DashboardNavItem
-            icon={<Clock size={20} />}
-            label="Transactions"
-            active={isActive("/dashboard/transactions")}
-            onClick={() => handleNavigation("/dashboard/transactions")}
-          />
-          <DashboardNavItem
-            icon={<Send size={20} />}
-            label="Pay & Transfer"
-            active={isActive("/dashboard/transfer")}
-            onClick={() => handleNavigation("/dashboard/transfer")}
-          />
+        <nav className="flex-1 px-4 py-6 space-y-8 overflow-y-auto">
+          {/* GROUP 1: CORE BANKING */}
+          <div>
+            <p className="px-4 mb-3 text-[10px] font-black text-slate-500 uppercase tracking-widest">
+              Core Banking
+            </p>
+            <div className="space-y-1">
+              <DashboardNavItem
+                icon={<LayoutGrid size={18} />}
+                label="Portfolio Overview"
+                active={isActive("/dashboard")}
+                onClick={() => handleNavigation("/dashboard")}
+              />
+              <DashboardNavItem
+                icon={<Clock size={18} />}
+                label="Audit Logs"
+                active={isActive("/dashboard/transactions")}
+                onClick={() => handleNavigation("/dashboard/transactions")}
+              />
+            </div>
+          </div>
 
-          <DashboardNavItem
-            icon={<CreditCard size={20} />}
-            label="Cards"
-            active={isActive("/dashboard/cards")}
-            onClick={() => handleNavigation("/dashboard/cards")}
-          />
+          {/* GROUP 2: PAYMENTS & REMITTANCE */}
+          <div>
+            <p className="px-4 mb-3 text-[10px] font-black text-slate-500 uppercase tracking-widest">
+              Remittance & Settlement
+            </p>
+            <div className="space-y-1">
+              <DashboardNavItem
+                icon={<Send size={18} />}
+                label="Internal Transfer"
+                active={isActive("/dashboard/transfer/local")}
+                onClick={() => handleNavigation("/dashboard/transfer/local")}
+              />
+              <DashboardNavItem
+                icon={<Globe size={18} />}
+                label="International Wire"
+                active={isActive("/dashboard/transfer/international")}
+                onClick={() =>
+                  handleNavigation("/dashboard/transfer/international")
+                }
+              />
+            </div>
+          </div>
 
-          {/* LOGOUT BUTTON */}
+          {/* GROUP 3: CAPITAL MANAGEMENT */}
+          <div>
+            <p className="px-4 mb-3 text-[10px] font-black text-slate-500 uppercase tracking-widest">
+              Capital Management
+            </p>
+            <div className="space-y-1">
+              <DashboardNavItem
+                icon={<ShieldCheck size={18} />}
+                label="Credit Facilities"
+                active={isActive("/dashboard/loans")}
+                onClick={() => handleNavigation("/dashboard/loans")}
+              />
+              <DashboardNavItem
+                icon={<CreditCard size={18} />}
+                label="Card Services"
+                active={isActive("/dashboard/cards")}
+                onClick={() => handleNavigation("/dashboard/cards")}
+              />
+            </div>
+          </div>
+
           <button
             onClick={handleLogout}
-            className="w-full flex items-center space-x-4 px-4 py-3.5 rounded-xl text-red-400 hover:text-white hover:bg-red-500/10 transition-all duration-300 mt-4 group"
+            className="w-full flex items-center space-x-4 px-4 py-3 text-red-400 hover:bg-red-500/10 rounded-xl transition-all group"
           >
             <LogOut
-              size={20}
-              className="group-hover:rotate-12 transition-transform"
+              size={18}
+              className="group-hover:translate-x-1 transition-transform"
             />
-            <span className="text-sm font-medium tracking-wide">
-              Secure Logout
-            </span>
+            <span className="text-sm font-medium">Terminate Session</span>
           </button>
         </nav>
       </aside>
@@ -135,19 +163,18 @@ const DashboardLayout = () => {
           <div className="flex items-center gap-4">
             <button
               onClick={() => setMobileMenuOpen(true)}
-              className="lg:hidden p-2 -ml-2 hover:bg-slate-50 rounded-full transition-colors"
+              className="lg:hidden p-2 hover:bg-slate-50 rounded-full"
             >
-              <Menu size={24} className="text-slate-600" />
+              <Menu size={24} />
             </button>
-
             <div className="flex flex-col">
               <p className="text-[10px] font-bold text-emerald-600 uppercase tracking-[0.2em] leading-none mb-1.5">
                 {greeting}
               </p>
               <h1 className="text-base lg:text-lg font-black text-slate-900 leading-none tracking-tight uppercase">
                 {isLoading
-                  ? "Loading..."
-                  : `${profileData?.user?.firstName || ""} ${profileData?.user?.lastName || ""}`}
+                  ? "Synchronizing..."
+                  : `${profileData?.user?.firstName} ${profileData?.user?.lastName}`}
               </h1>
             </div>
           </div>
@@ -155,25 +182,21 @@ const DashboardLayout = () => {
           <div className="flex items-center gap-2 md:gap-6">
             <button
               onClick={() => setShowBalances(!showBalances)}
-              className="hidden sm:flex items-center gap-2 px-4 py-2 text-[10px] font-black text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-all tracking-widest"
+              className="hidden sm:flex items-center gap-2 px-4 py-2 text-[10px] font-black text-slate-400 hover:text-emerald-600 tracking-widest"
             >
               {showBalances ? <EyeOff size={16} /> : <Eye size={16} />}
-              {showBalances ? "HIDE" : "SHOW"}
+              {showBalances ? "HIDE ASSETS" : "SHOW ASSETS"}
             </button>
-
-            <button className="relative p-2.5 text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 rounded-full transition-all">
-              <Bell size={22} />
-              <span className="absolute top-2.5 right-2.5 w-2 h-2 bg-emerald-500 rounded-full border-2 border-white"></span>
-            </button>
-
-            <div className="flex items-center gap-3 pl-4 border-l border-slate-100 ml-2">
+            <div className="flex items-center gap-3 pl-4 border-l border-slate-100">
               <div className="hidden md:block text-right">
                 <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest">
-                  UCB Elite
+                  Institutional User
                 </p>
-                <p className="text-[11px] font-bold text-emerald-600">Secure</p>
+                <p className="text-[11px] font-bold text-emerald-600">
+                  Verified
+                </p>
               </div>
-              <div className="w-10 h-10 lg:w-11 lg:h-11 bg-slate-900 text-white rounded-2xl flex items-center justify-center text-xs lg:text-sm font-black shadow-lg shadow-slate-200 hover:bg-emerald-600 transition-all cursor-pointer overflow-hidden">
+              <div className="w-10 h-10 bg-slate-900 text-white rounded-xl flex items-center justify-center text-xs font-black">
                 {isLoading ? (
                   <Loader2 size={16} className="animate-spin" />
                 ) : (
@@ -194,13 +217,6 @@ const DashboardLayout = () => {
           />
         </main>
       </div>
-
-      {isMobileMenuOpen && (
-        <div
-          className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-40 lg:hidden"
-          onClick={() => setMobileMenuOpen(false)}
-        />
-      )}
     </div>
   );
 };
@@ -208,20 +224,23 @@ const DashboardLayout = () => {
 const DashboardNavItem = ({ icon, label, active, onClick }) => (
   <button
     onClick={onClick}
-    className={`w-full flex items-center space-x-4 px-4 py-3.5 rounded-xl transition-all duration-300 group ${
+    className={`w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all duration-300 group ${
       active
-        ? "bg-emerald-600 text-white font-bold shadow-xl shadow-emerald-900/40"
+        ? "bg-emerald-600/10 text-emerald-400 font-bold"
         : "text-slate-400 hover:text-white hover:bg-white/5"
     }`}
   >
-    <span
-      className={`transition-colors duration-300 ${
-        active ? "text-white" : "text-slate-500 group-hover:text-emerald-400"
-      }`}
-    >
-      {icon}
-    </span>
-    <span className="text-sm font-medium tracking-wide">{label}</span>
+    <div className="flex items-center space-x-4">
+      <span
+        className={`${active ? "text-emerald-400" : "text-slate-500 group-hover:text-emerald-400"}`}
+      >
+        {icon}
+      </span>
+      <span className="text-sm font-medium tracking-wide">{label}</span>
+    </div>
+    {active && (
+      <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full shadow-[0_0_8px_rgba(16,185,129,0.8)]" />
+    )}
   </button>
 );
 
