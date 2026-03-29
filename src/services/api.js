@@ -1,10 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 // "http://localhost:5000/api",
-// "https://united-capital.onrender.com",
+// "https://united-capital.onrender.com/api",
 export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://united-capital.onrender.com",
+    baseUrl: "https://united-capital.onrender.com/api",
     prepareHeaders: (headers) => {
       const token = localStorage.getItem("token");
       if (token) {
