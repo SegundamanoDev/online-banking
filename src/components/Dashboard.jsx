@@ -127,15 +127,7 @@ const Dashboard = () => {
                   ? `${currencySign}${account.balance.toLocaleString()}`
                   : "••••••••"}
               </h2>
-              <div className="flex items-center gap-2 mt-4 text-emerald-600 font-bold text-xs bg-emerald-50 w-fit px-3 py-1 rounded-full">
-                <TrendingUp size={14} />
-                <span>+0.42% Institutional Yield</span>
-              </div>
             </div>
-
-            <button className="p-4 bg-slate-50 text-slate-400 hover:text-slate-900 rounded-2xl transition-all border border-slate-100 hover:border-slate-200 shadow-sm">
-              <SlidersHorizontal size={20} />
-            </button>
           </div>
 
           <div className="relative z-10 grid grid-cols-1 md:grid-cols-3 gap-10 border-t border-slate-50 mt-12 pt-10">

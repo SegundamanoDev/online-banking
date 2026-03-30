@@ -41,6 +41,7 @@ import PendingWires from "./components/PendingWires";
 import Ledger from "./components/Ledger";
 import DashboardLoan from "./components/DashboardLoan";
 import LoanUnderwriting from "./components/LoanUnderwriting";
+import SecurityCenter from "./components/SecurityCenter";
 
 // This helper hides the Navbar on dashboard routes
 const NavigationWrapper = () => {
@@ -99,6 +100,7 @@ function App() {
           <Route index element={<Dashboard />} />
 
           <Route path="transactions" element={<Transactions />} />
+          <Route path="security" element={<SecurityCenter />} />
           <Route path="transfer/local" element={<InternalTransfer />} />
           <Route
             path="transfer/international"

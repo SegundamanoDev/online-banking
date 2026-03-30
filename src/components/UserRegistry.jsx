@@ -1,11 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Search,
-  Filter,
   MoreVertical,
   ShieldCheck,
   ShieldAlert,
-  UserMinus,
   XCircle,
   Loader2,
 } from "lucide-react";
@@ -17,20 +15,40 @@ import {
 import { toast } from "react-hot-toast";
 
 const UserRegistry = () => {
-  const [mode, setMode] = useState(null);
+  // --- API HOOKS ---
+  const { data: users, isLoading } = useGetAdminUsersQuery();
+  const [updateStatus] = useUpdateUserStatusMutation();
+  const [adminDeposit, { isLoading: isProcessing }] = useAdminDepositMutation();
+
+  // --- STATE ---
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [mode, setMode] = useState(null); // 'credit' | 'debit' | null
+
+  // Ledger Form State
   const [depositData, setDepositData] = useState({
     amount: "",
     description: "",
     date: new Date().toISOString().split("T")[0],
   });
-  const { data: users, isLoading } = useGetAdminUsersQuery();
-  const [updateStatus] = useUpdateUserStatusMutation();
-  const [adminDeposit, { isLoading: isProcessing }] = useAdminDepositMutation();
 
-  const [searchTerm, setSearchTerm] = useState("");
-  const [selectedUser, setSelectedUser] = useState(null);
-  const [adjustmentAmount, setAdjustmentAmount] = useState("");
+  // Security Protocol State
+  const [freezeReason, setFreezeReason] = useState("administrative_hold");
+  const [restrictions, setRestrictions] = useState({
+    canTransfer: true,
+    canRequestLoan: true,
+    canChangeSecurity: true,
+  });
 
+  // Sync restrictions when a user is selected
+  useEffect(() => {
+    if (selectedUser?.restrictions) {
+      setRestrictions(selectedUser.restrictions);
+      setFreezeReason(selectedUser.freezeReason || "administrative_hold");
+    }
+  }, [selectedUser]);
+
+  // --- HANDLERS ---
   const filteredUsers = users?.filter(
     (user) =>
       user.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -38,20 +56,39 @@ const UserRegistry = () => {
       user.email.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
-  const handleStatusToggle = async (id, newStatus) => {
+  const handleStatusUpdate = async (newStatus) => {
     try {
-      await updateStatus({ id, status: newStatus }).unwrap();
-      toast.success(`Protocol Updated: User is now ${newStatus}`);
+      const payload = {
+        status: newStatus,
+        freezeReason: newStatus === "active" ? "none" : freezeReason,
+        restrictions:
+          newStatus === "active"
+            ? {
+                canTransfer: true,
+                canRequestLoan: true,
+                canChangeSecurity: true,
+              }
+            : restrictions,
+      };
+
+      await updateStatus({ id: selectedUser._id, ...payload }).unwrap();
+
+      setSelectedUser((prev) => ({
+        ...prev,
+        status: newStatus,
+        restrictions: payload.restrictions,
+        freezeReason: payload.freezeReason,
+      }));
+
+      toast.success(`Protocol ${newStatus.toUpperCase()} Deployed`);
     } catch (err) {
-      toast.error("Override Failed: System rejected the status change");
+      toast.error(err.data?.message || "Override Failed");
     }
   };
 
   const handleBalanceAdjustment = async (e) => {
     e.preventDefault();
-
     const amount = parseFloat(depositData.amount);
-    // Negative if mode is debit
     const finalAmount = mode === "debit" ? -Math.abs(amount) : Math.abs(amount);
 
     try {
@@ -59,12 +96,10 @@ const UserRegistry = () => {
         userId: selectedUser._id,
         amount: finalAmount,
         description: depositData.description,
-        date: depositData.date, // Make sure your backend saves this!
+        date: depositData.date,
       }).unwrap();
 
       toast.success(`Ledger Synchronized: ${mode.toUpperCase()} Success`);
-
-      // Clear state and close form
       setDepositData({
         amount: "",
         description: "",
@@ -72,10 +107,9 @@ const UserRegistry = () => {
       });
       setMode(null);
 
-      // Optional: manually update the balance in the side panel view
       setSelectedUser((prev) => ({
         ...prev,
-        balance: prev.balance + finalAmount,
+        balance: (prev.balance || 0) + finalAmount,
       }));
     } catch (err) {
       toast.error(err.data?.message || "Override rejected.");
@@ -89,34 +123,32 @@ const UserRegistry = () => {
         className={`flex-1 transition-all duration-300 ${selectedUser ? "lg:mr-[400px]" : ""}`}
       >
         <div className="bg-white rounded-[2rem] border border-slate-100 shadow-sm overflow-hidden">
-          {/* TABLE HEADER & FILTERS */}
+          {/* HEADER */}
           <div className="p-6 border-b border-slate-50 flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
               <h2 className="text-sm font-black uppercase tracking-widest text-slate-900">
                 Client Registry
               </h2>
               <p className="text-[10px] font-bold text-slate-400 uppercase mt-1">
-                Total Managed Identities: {users?.length || 0}
+                Managed Identities: {users?.length || 0}
               </p>
             </div>
 
-            <div className="flex items-center gap-3">
-              <div className="relative">
-                <Search
-                  className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
-                  size={16}
-                />
-                <input
-                  type="text"
-                  placeholder="SEARCH UID / EMAIL / NAME..."
-                  className="pl-10 pr-4 py-2 bg-slate-50 border-none rounded-xl text-[11px] font-bold uppercase tracking-tight focus:ring-2 focus:ring-emerald-500 w-64"
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                />
-              </div>
+            <div className="relative">
+              <Search
+                className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
+                size={16}
+              />
+              <input
+                type="text"
+                placeholder="SEARCH UID / EMAIL / NAME..."
+                className="pl-10 pr-4 py-2 bg-slate-50 border-none rounded-xl text-[11px] font-bold uppercase focus:ring-2 focus:ring-emerald-500 w-64"
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
             </div>
           </div>
 
-          {/* THE DATA TABLE */}
+          {/* TABLE */}
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
@@ -160,7 +192,7 @@ const UserRegistry = () => {
                             {user.lastName[0]}
                           </div>
                           <div>
-                            <p className="text-xs font-black text-slate-900 uppercase tracking-tight">
+                            <p className="text-xs font-black text-slate-900 uppercase">
                               {user.firstName} {user.lastName}
                             </p>
                             <p className="text-[10px] font-medium text-slate-400">
@@ -173,7 +205,7 @@ const UserRegistry = () => {
                         <StatusBadge status={user.status} />
                       </td>
                       <td className="px-6 py-4">
-                        <p className="text-[10px] font-black text-slate-700 uppercase tracking-tighter">
+                        <p className="text-[10px] font-black text-slate-700 uppercase">
                           Gold Tier
                         </p>
                         <p className="text-[9px] font-bold text-slate-400 uppercase">
@@ -221,15 +253,13 @@ const UserRegistry = () => {
           </div>
 
           <div className="p-8 space-y-8 flex-1 overflow-y-auto">
-            {/* LEDGER CONTROL SECTION */}
+            {/* LEDGER CONTROL */}
             <section className="space-y-3">
               <h4 className="text-[10px] font-black uppercase text-slate-400 tracking-widest">
                 Ledger Control
               </h4>
-
               <div className="bg-slate-50 p-6 rounded-[2rem] border border-slate-100">
                 {!mode ? (
-                  /* INITIAL VIEW: Balance and Choice Buttons */
                   <div className="space-y-4">
                     <div>
                       <p className="text-[10px] font-bold text-slate-500 uppercase">
@@ -255,7 +285,6 @@ const UserRegistry = () => {
                     </div>
                   </div>
                 ) : (
-                  /* FORM VIEW: Narrative, Amount, Date */
                   <form
                     onSubmit={handleBalanceAdjustment}
                     className="space-y-5 animate-in fade-in zoom-in-95 duration-200"
@@ -274,74 +303,35 @@ const UserRegistry = () => {
                         Cancel
                       </button>
                     </div>
-
-                    {/* Amount */}
-                    <div>
-                      <label className="text-[9px] font-black uppercase text-slate-400 block mb-1.5 ml-1">
-                        Value (USD)
-                      </label>
-                      <div className="relative">
-                        <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300 font-bold">
-                          $
-                        </span>
-                        <input
-                          type="number"
-                          required
-                          placeholder="0.00"
-                          className="w-full bg-white border border-slate-200 rounded-xl py-3 pl-10 pr-4 text-sm font-black outline-none focus:ring-2 focus:ring-emerald-500"
-                          value={depositData.amount}
-                          onChange={(e) =>
-                            setDepositData({
-                              ...depositData,
-                              amount: e.target.value,
-                            })
-                          }
-                        />
-                      </div>
-                    </div>
-
-                    {/* Narrative */}
-                    <div>
-                      <label className="text-[9px] font-black uppercase text-slate-400 block mb-1.5 ml-1">
-                        Narrative
-                      </label>
-                      <textarea
-                        required
-                        rows="2"
-                        placeholder="Official reason..."
-                        className="w-full bg-white border border-slate-200 rounded-xl py-3 px-4 text-xs font-bold outline-none focus:ring-2 focus:ring-emerald-500 resize-none"
-                        value={depositData.description}
-                        onChange={(e) =>
-                          setDepositData({
-                            ...depositData,
-                            description: e.target.value,
-                          })
-                        }
-                      />
-                    </div>
-
-                    {/* Date */}
-                    <div>
-                      <label className="text-[9px] font-black uppercase text-slate-400 block mb-1.5 ml-1">
-                        Effective Date
-                      </label>
-                      <input
-                        type="date"
-                        required
-                        className="w-full bg-white border border-slate-200 rounded-xl py-3 px-4 text-xs font-bold outline-none focus:ring-2 focus:ring-emerald-500"
-                        value={depositData.date}
-                        onChange={(e) =>
-                          setDepositData({
-                            ...depositData,
-                            date: e.target.value,
-                          })
-                        }
-                      />
-                    </div>
-
+                    <input
+                      type="number"
+                      required
+                      placeholder="0.00"
+                      className="w-full bg-white border border-slate-200 rounded-xl py-3 px-4 text-sm font-black outline-none focus:ring-2 focus:ring-emerald-500"
+                      value={depositData.amount}
+                      onChange={(e) =>
+                        setDepositData({
+                          ...depositData,
+                          amount: e.target.value,
+                        })
+                      }
+                    />
+                    <textarea
+                      required
+                      rows="2"
+                      placeholder="Official reason..."
+                      className="w-full bg-white border border-slate-200 rounded-xl py-3 px-4 text-xs font-bold outline-none focus:ring-2 focus:ring-emerald-500 resize-none"
+                      value={depositData.description}
+                      onChange={(e) =>
+                        setDepositData({
+                          ...depositData,
+                          description: e.target.value,
+                        })
+                      }
+                    />
                     <button
                       disabled={isProcessing}
-                      className={`w-full py-4 rounded-xl font-black text-[10px] uppercase tracking-widest text-white transition-all flex items-center justify-center gap-2 ${mode === "credit" ? "bg-emerald-500 hover:bg-emerald-600" : "bg-slate-900 hover:bg-black"}`}
+                      className={`w-full py-4 rounded-xl font-black text-[10px] uppercase text-white transition-all flex items-center justify-center gap-2 ${mode === "credit" ? "bg-emerald-500 hover:bg-emerald-600" : "bg-slate-900 hover:bg-black"}`}
                     >
                       {isProcessing ? (
                         <Loader2 className="animate-spin" size={14} />
@@ -354,33 +344,84 @@ const UserRegistry = () => {
               </div>
             </section>
 
-            {/* STATUS OVERRIDES */}
-            <section className="space-y-3">
+            {/* SECURITY PROTOCOLS */}
+            <section className="space-y-4">
               <h4 className="text-[10px] font-black uppercase text-slate-400 tracking-widest">
-                Protocol Override
+                Security Protocol Override
               </h4>
-              <div className="grid grid-cols-2 gap-3">
-                <button
-                  onClick={() => handleStatusToggle(selectedUser._id, "active")}
-                  className={`flex flex-col items-center gap-2 p-4 rounded-2xl border transition-all ${selectedUser.status === "active" ? "bg-emerald-50 border-emerald-200 text-emerald-600" : "bg-white border-slate-100 text-slate-400"}`}
-                >
-                  <ShieldCheck size={20} />
-                  <span className="text-[9px] font-black uppercase">
-                    Activate
-                  </span>
-                </button>
-                <button
-                  onClick={() =>
-                    handleStatusToggle(selectedUser._id, "blocked")
-                  }
-                  className={`flex flex-col items-center gap-2 p-4 rounded-2xl border transition-all ${selectedUser.status === "blocked" ? "bg-red-50 border-red-200 text-red-600" : "bg-white border-slate-100 text-slate-400"}`}
-                >
-                  <ShieldAlert size={20} />
-                  <span className="text-[9px] font-black uppercase">
-                    Suspend
-                  </span>
-                </button>
+              <div className="grid grid-cols-2 gap-2">
+                {["active", "frozen", "suspended", "restricted"].map((s) => (
+                  <button
+                    key={s}
+                    onClick={() => handleStatusUpdate(s)}
+                    className={`py-2 px-1 rounded-xl border text-[9px] font-black uppercase transition-all ${
+                      selectedUser.status === s
+                        ? "bg-slate-900 text-white border-slate-900 shadow-md"
+                        : "bg-white text-slate-400 border-slate-100 hover:border-slate-300"
+                    }`}
+                  >
+                    {s}
+                  </button>
+                ))}
               </div>
+
+              {selectedUser.status !== "active" && (
+                <div className="bg-slate-50 p-4 rounded-2xl space-y-3 border border-slate-100 animate-in fade-in slide-in-from-top-2">
+                  <p className="text-[9px] font-black text-slate-500 uppercase mb-2">
+                    Block Specific Actions
+                  </p>
+                  {Object.keys(restrictions).map((key) => (
+                    <label
+                      key={key}
+                      className="flex items-center justify-between cursor-pointer group"
+                    >
+                      <span className="text-[10px] font-bold text-slate-600 uppercase group-hover:text-slate-900">
+                        {key.replace(/([A-Z])/g, " $1")}
+                      </span>
+                      <input
+                        type="checkbox"
+                        className="w-4 h-4 rounded border-slate-300 text-emerald-500 focus:ring-emerald-500"
+                        checked={restrictions[key]}
+                        onChange={(e) =>
+                          setRestrictions({
+                            ...restrictions,
+                            [key]: e.target.checked,
+                          })
+                        }
+                      />
+                    </label>
+                  ))}
+                  <div className="pt-2">
+                    <label className="text-[9px] font-black text-slate-400 uppercase block mb-1">
+                      Freeze Reason
+                    </label>
+                    <select
+                      value={freezeReason}
+                      onChange={(e) => setFreezeReason(e.target.value)}
+                      className="w-full bg-white border border-slate-200 rounded-lg py-2 px-2 text-[10px] font-bold outline-none"
+                    >
+                      <option value="suspicious_activity">
+                        Suspicious Activity
+                      </option>
+                      <option value="failed_pin_attempts">
+                        Failed PIN Attempts
+                      </option>
+                      <option value="administrative_hold">
+                        Administrative Hold
+                      </option>
+                      <option value="verification_required">
+                        Verification Required
+                      </option>
+                    </select>
+                  </div>
+                  <button
+                    onClick={() => handleStatusUpdate(selectedUser.status)}
+                    className="w-full py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 text-[9px] font-black uppercase rounded-lg transition-colors"
+                  >
+                    Update Restrictions
+                  </button>
+                </div>
+              )}
             </section>
 
             {/* DATA ROWS */}
@@ -409,16 +450,17 @@ const UserRegistry = () => {
   );
 };
 
-// ... StatusBadge and InfoRow helpers remain same ...
+// --- HELPERS ---
 const StatusBadge = ({ status }) => {
   const styles = {
     active: "bg-emerald-50 text-emerald-600 border-emerald-100",
-    pending: "bg-amber-50 text-amber-600 border-amber-100",
-    blocked: "bg-red-50 text-red-600 border-red-100",
+    frozen: "bg-blue-50 text-blue-600 border-blue-100",
+    suspended: "bg-red-50 text-red-600 border-red-100",
+    restricted: "bg-amber-50 text-amber-600 border-amber-100",
   };
   return (
     <span
-      className={`px-2 py-1 rounded-md text-[9px] font-black uppercase border tracking-tighter ${styles[status]}`}
+      className={`px-2 py-1 rounded-md text-[9px] font-black uppercase border tracking-tighter ${styles[status] || styles.active}`}
     >
       {status}
     </span>

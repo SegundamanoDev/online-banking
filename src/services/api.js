@@ -1,6 +1,7 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 // "http://localhost:5000/api",
 // "https://united-capital.onrender.com/api",
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+
 export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
@@ -13,8 +14,7 @@ export const apiSlice = createApi({
       return headers;
     },
   }),
-  // Tags allow RTK Query to know when to auto-refresh data
-  tagTypes: ["User", "Transaction", "Account", "Admin"],
+  tagTypes: ["User", "Transaction", "Account", "Admin", "Loan"],
 
   endpoints: (builder) => ({
     /* --- AUTHENTICATION --- */
@@ -24,6 +24,7 @@ export const apiSlice = createApi({
         method: "POST",
         body: credentials,
       }),
+      invalidatesTags: ["User", "Account"],
     }),
     register: builder.mutation({
       query: (userData) => ({
@@ -47,6 +48,25 @@ export const apiSlice = createApi({
       invalidatesTags: ["User"],
     }),
 
+    /* --- SECURITY & PIN MANAGEMENT --- */
+    setTransactionPin: builder.mutation({
+      query: (pinData) => ({
+        url: "/security/set-pin",
+        method: "POST",
+        body: pinData,
+      }),
+      invalidatesTags: ["Account"],
+    }),
+    verifyTransactionPin: builder.mutation({
+      query: (pinData) => ({
+        url: "/security/verify-pin",
+        method: "POST",
+        body: pinData,
+      }),
+      // Invalidates account because 3 fails will change 'isActive' to false
+      invalidatesTags: ["Account"],
+    }),
+
     /* --- TRANSACTION & BANKING --- */
     getTransactions: builder.query({
       query: () => "/transactions/history",
@@ -67,14 +87,14 @@ export const apiSlice = createApi({
     /* --- CREDIT FACILITIES (LOANS) --- */
     requestLoan: builder.mutation({
       query: (loanData) => ({
-        url: "/transactions/loans/request",
+        url: "/loans/apply",
         method: "POST",
         body: loanData,
       }),
-      invalidatesTags: ["Account"],
+      invalidatesTags: ["Account", "Loan"],
     }),
 
-    /* --- ADMINISTRATIVE CORE --- */
+    /* --- ADMINISTRATIVE CORE (USER MGMT) --- */
     getAdminUsers: builder.query({
       query: () => "/admin/users",
       providesTags: ["Admin", "User"],
@@ -85,7 +105,7 @@ export const apiSlice = createApi({
         method: "PATCH",
         body: { status },
       }),
-      invalidatesTags: ["Admin"],
+      invalidatesTags: ["Admin", "User", "Account"],
     }),
     adminDeposit: builder.mutation({
       query: (depositData) => ({
@@ -120,31 +140,48 @@ export const apiSlice = createApi({
     /* --- ADMINISTRATIVE LOAN UNDERWRITING --- */
     getLoanRequests: builder.query({
       query: () => "/admin/loans/pending",
-      providesTags: ["Admin", "Transaction"],
+      providesTags: ["Admin", "Loan"],
     }),
     approveLoan: builder.mutation({
       query: (loanId) => ({
         url: `/admin/loans/${loanId}/approve`,
         method: "PATCH",
       }),
-      invalidatesTags: ["Admin", "Account", "Transaction"],
+      invalidatesTags: ["Admin", "Account", "Transaction", "Loan"],
     }),
     rejectLoan: builder.mutation({
       query: (loanId) => ({
         url: `/admin/loans/${loanId}/reject`,
         method: "PATCH",
       }),
-      invalidatesTags: ["Admin"],
+      invalidatesTags: ["Admin", "Loan"],
+    }),
+
+    requestPinReset: builder.mutation({
+      query: () => ({
+        url: "/security/request-pin-reset",
+        method: "POST",
+      }),
+    }),
+
+    resetPinWithToken: builder.mutation({
+      query: (resetData) => ({
+        url: "/security/verify-pin-reset",
+        method: "POST",
+        body: resetData,
+      }),
+      invalidatesTags: ["Account"],
     }),
   }),
 });
 
-// Export hooks for use in components
 export const {
   useLoginMutation,
   useRegisterMutation,
   useGetProfileQuery,
   useUpdateProfileMutation,
+  useSetTransactionPinMutation,
+  useVerifyTransactionPinMutation,
   useGetTransactionsQuery,
   useTransferMoneyMutation,
   useGetStatementQuery,
@@ -159,4 +196,6 @@ export const {
   useGetLoanRequestsQuery,
   useApproveLoanMutation,
   useRejectLoanMutation,
+  useRequestPinResetMutation,
+  useResetPinWithTokenMutation,
 } = apiSlice;
